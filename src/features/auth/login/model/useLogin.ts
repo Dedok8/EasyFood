@@ -1,12 +1,16 @@
 import { useLoginMutation } from "@/features/auth/api/authApi";
 
 export function useLogin() {
-  const [loginMutation, { isLoading, isError }] = useLoginMutation();
-
-  async function login(credentials: string) {
-    const result = await loginMutation(credentials);
-    return result;
+  interface ILoginCredentials {
+    email: string;
+    password: string;
   }
 
-  return { login, isLoading, isError };
+  const [loginMutation, { isLoading, error }] = useLoginMutation();
+
+  async function login(credentials: ILoginCredentials) {
+    return await loginMutation(credentials).unwrap();
+  }
+
+  return { login, isLoading, error };
 }

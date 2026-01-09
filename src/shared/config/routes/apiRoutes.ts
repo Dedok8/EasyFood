@@ -13,27 +13,28 @@ export const API_ROUTES = {
   users: {
     me: "/users/me",
     all: "/users",
-    byId: (id: string) => `/users/${id}`,
-    update: (id: string) => `/users/${id}`,
-    changePassword: (id: string) => `/users/${id}/password`,
+    byId: (id: number) => `/users/${id}`,
+    update: (id: number) => `/users/${id}`,
+    changePassword: (id: number) => `/users/${id}/password`,
 
-    locations: (userId: string) => `/users/${userId}/locations`,
-    locationById: (userId: string, locId: string) =>
+    // locations: (userId: number) => `/users/${userId}/locations`,
+    locationById: (userId: number, locId: string) =>
       `/users/${userId}/locations/${locId}`,
 
-    orders: (userId: string) => `/users/${userId}/orders`,
-    rewards: (id: string) => `/users/${id}/rewards`,
-    cards: (id: string) => `/users/${id}/cards`,
+    orders: (userId: number) => `/users/${userId}/orders`,
+    rewards: (id: number) => `/users/${id}/rewards`,
+    cards: (id: number) => `/users/${id}/cards`,
 
-    favorites: (userId: string) => `/users/${userId}/favorites`,
+    favorites: (userId: number) => `/users/${userId}/favorites`,
   },
 
   dishes: {
     all: "/dishes",
     popular: "/dishes/popular",
     recommended: "/dishes/recommended",
-    byId: (id: string) => `/dishes/${id}`,
-    reviews: (id: string) => `/dishes/${id}/reviews`,
+    byId: (id: number) => `/dishes/${id}`,
+    reviews: (id: number) => `/dishes/${id}/reviews`,
+    create: (restaurantId: number) => `/restaurants/${restaurantId}/dishes`,
     search: "/dishes/search",
   },
 
@@ -59,7 +60,7 @@ export const API_ROUTES = {
   },
 
   orders: {
-    create: "/orders",
+    create: (id: number) => `/users/${id}/orders`,
     all: "/orders",
     byId: (id: string) => `/orders/${id}`,
     updateStatus: (id: string) => `/orders/${id}/status`,

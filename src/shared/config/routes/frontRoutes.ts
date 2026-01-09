@@ -1,7 +1,7 @@
 import { ROLES } from "@/shared/config/roles/roles";
-import type { IFrontRoutes, IRouteConfig } from "@/shared/config/roles/types";
+import type { IFrontRoutes, IRouteConfig } from "@/shared/config/routes/types";
 
-export const FRONT_ROUTES: IFrontRoutes = {
+export const FRONT_ROUTES = {
   pages: {
     Splash: {
       path: "/",
@@ -14,9 +14,9 @@ export const FRONT_ROUTES: IFrontRoutes = {
       meta: { title: "About Us", isInMenu: false, requireAuth: false },
     },
     Authentication: {
-      path: "/Authentication",
+      path: "/authentication",
       navigationPath: "/Authentication",
-      meta: { title: "Sign In", isInMenu: false, requireAuth: false },
+      meta: { title: "Sign In", isInMenu: true, requireAuth: false },
     },
     Register: {
       path: "/register",
@@ -140,7 +140,7 @@ export const FRONT_ROUTES: IFrontRoutes = {
       },
     },
   },
-};
+} satisfies IFrontRoutes;
 
 export function getPagesObjectList(): IRouteConfig[] {
   return Object.values(FRONT_ROUTES.pages);
