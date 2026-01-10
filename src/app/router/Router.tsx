@@ -1,6 +1,6 @@
 import { appRouterRoutes } from "@/app/router/appRouterRoutes";
 import { authCheckLoader } from "@/app/router/authCheckLoader";
-import Splash from "@/pages/Splash";
+import Splash from "@/pages/home/Splash";
 import Mainlayout from "@/widgets/layouts/MainLayout";
 import { Mutex } from "async-mutex";
 import type { LoaderFunctionArgs } from "react-router";

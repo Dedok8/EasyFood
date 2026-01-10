@@ -9,6 +9,7 @@ export interface IRouteConfig {
   path: string;
   navigationPath?: string | ((id: string) => string);
   meta: IRouteMeta;
+  dir?: string;
 }
 
 export type PagesMap = Record<string, IRouteConfig>;

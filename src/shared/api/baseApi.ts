@@ -1,7 +1,7 @@
 import type { RootState } from "@/app/store/store";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const BASE_URL = "https://easyfood-jwt.onrender.com/api/v1/docs/";
+const BASE_URL = "https://easyfood-jwt.onrender.com/api/v1/";
 
 export const baseApi = createApi({
   reducerPath: "baseApi",
@@ -13,7 +13,7 @@ export const baseApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Users", "Auth", "Orders", "Dishes"],
+  tagTypes: ["Users", "Auth", "Orders", "Dishes", "Restorants"],
   endpoints: () => ({}),
 });
 

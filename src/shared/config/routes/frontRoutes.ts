@@ -12,6 +12,7 @@ export const FRONT_ROUTES = {
       path: "/onboarding",
       navigationPath: "/onboarding",
       meta: { title: "About Us", isInMenu: false, requireAuth: false },
+      dir: "auth",
     },
     Authentication: {
       path: "/authentication",
@@ -111,6 +112,24 @@ export const FRONT_ROUTES = {
       navigationPath: (id: string) => `/order-tracking/${id}`,
       meta: { title: "Track Your Order", isInMenu: false, requireAuth: true },
     },
+    ShareYourLocation: {
+      path: "/share-your-location",
+      navigationPath: "/share-your-location",
+      meta: {
+        title: "Share Your Location",
+        isInMenu: false,
+        requireAuth: true,
+      },
+    },
+    // EmailVerification: {
+    //   path: "/email-verification",
+    //   navigationPath: "/email-verification",
+    //   meta: {
+    //     title: "Email Verification",
+    //     isInMenu: false,
+    //     requireAuth: false,
+    //   },
+    // },
 
     Addresses: {
       path: "/profile/addresses",

@@ -1,6 +1,7 @@
 import * as yup from "yup";
+import type { TFunction } from "i18next";
 
-export const registerSchema = (t) =>
+export const registerSchema = (t: TFunction) =>
   yup.object().shape({
     displayName: yup
       .string()
@@ -19,7 +20,7 @@ export const registerSchema = (t) =>
       .required(t("validation.password_required")),
   });
 
-export const loginSchema = (t) =>
+export const loginSchema = (t: TFunction) =>
   yup.object().shape({
     email: yup
       .string()

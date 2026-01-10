@@ -5,7 +5,7 @@ export const API_ROUTES = {
     refresh: "/auth/refresh",
     logout: "/auth/logout",
     Authentication: "/Authentication",
-    emailVerification: "/emailVerification",
+    // emailVerification: "/emailVerification",
     forgotPassword: "/auth/forgot-password",
     resetPassword: "/auth/reset-password",
   },
@@ -21,11 +21,12 @@ export const API_ROUTES = {
     locationById: (userId: number, locId: string) =>
       `/users/${userId}/locations/${locId}`,
 
-    orders: (userId: number) => `/users/${userId}/orders`,
+    orders: (id: number) => `/users/${id}/orders`,
     rewards: (id: number) => `/users/${id}/rewards`,
     cards: (id: number) => `/users/${id}/cards`,
 
-    favorites: (userId: number) => `/users/${userId}/favorites`,
+    favorites: (id: number) => `/users/${id}/favorites`,
+    checkEmail: (id: number) => `/users/check-email/${id}`,
   },
 
   dishes: {
@@ -35,6 +36,8 @@ export const API_ROUTES = {
     byId: (id: number) => `/dishes/${id}`,
     reviews: (id: number) => `/dishes/${id}/reviews`,
     create: (restaurantId: number) => `/restaurants/${restaurantId}/dishes`,
+    delete: (restaurantId: number, dishId: number) =>
+      `/restaurants/${restaurantId}/dishes/${dishId}`,
     search: "/dishes/search",
   },
 
@@ -46,9 +49,11 @@ export const API_ROUTES = {
   restaurants: {
     all: "/restaurants",
     nearby: "/restaurants/nearby",
-    byId: (id: string) => `/restaurants/${id}`,
-    dishes: (restaurantId: string) => `/restaurants/${restaurantId}/dishes`,
-    reviews: (id: string) => `/restaurants/${id}/reviews`,
+    byId: (id: number) => `/restaurants/${id}`,
+    dishes: (restaurantId: number) => `/restaurants/${restaurantId}/dishes`,
+    reviews: (id: number) => `/restaurants/${id}/reviews`,
+    createRestorant: "/restaurants",
+    updateRestorant: (id: number) => `/restaurants/${id}`,
   },
 
   cart: {

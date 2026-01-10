@@ -1,0 +1,20 @@
+@import "../../style.scss";
+
+.logo-string {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: toRem(10);
+
+  &__highlight {
+    color: #f0932b;
+    font-weight: 700;
+    font-size: toRem(24);
+  }
+
+  &__normal {
+    color: #30336b;
+    font-weight: 700;
+    font-size: toRem(24);
+  }
+}

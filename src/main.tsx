@@ -1,6 +1,6 @@
 import { createRoot } from "react-dom/client";
 import "./shared/styles/index.css";
-import "./shared/styles/scss/index.scss";
+import "./shared/styles/scss/style.scss";
 import { ErrorBoundary } from "react-error-boundary";
 import { Provider } from "react-redux";
 import { store } from "@/app/store/store.ts";
