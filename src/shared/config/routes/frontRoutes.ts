@@ -12,16 +12,15 @@ export const FRONT_ROUTES = {
       path: "/onboarding",
       navigationPath: "/onboarding",
       meta: { title: "About Us", isInMenu: false, requireAuth: false },
-      dir: "auth",
     },
     Authentication: {
       path: "/authentication",
       navigationPath: "/Authentication",
       meta: { title: "Sign In", isInMenu: true, requireAuth: false },
     },
-    Register: {
-      path: "/register",
-      navigationPath: "/register",
+    Registration: {
+      path: "/Registration",
+      navigationPath: "/Registration",
       meta: { title: "Sign Up", isInMenu: false, requireAuth: false },
     },
     OtpVerification: {
@@ -119,6 +118,15 @@ export const FRONT_ROUTES = {
         title: "Share Your Location",
         isInMenu: false,
         requireAuth: true,
+      },
+    },
+    OpenMobileApplication: {
+      path: "/open-mobile-application",
+      navigationPath: "/open-mobile-application",
+      meta: {
+        title: "Open Mobile Application",
+        isInMenu: false,
+        requireAuth: false,
       },
     },
     // EmailVerification: {

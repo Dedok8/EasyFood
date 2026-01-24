@@ -1,3 +1,4 @@
+// authSlice.ts
 import type { RootState } from "@/app/store/store";
 import { authApi } from "@/features/auth/api/authApi";
 import {
@@ -104,5 +105,7 @@ export const { setCredentials, logout } = authSlice.actions;
 
 export const selectAuthUser = (state: RootState) => state.auth.user;
 export const selectAccessToken = (state: RootState) => state.auth.accessToken;
+export const selectAuthLoading = (state: RootState) => state.auth.loading;
+export const selectAuthError = (state: RootState) => state.auth.error;
 
 export default authSlice.reducer;

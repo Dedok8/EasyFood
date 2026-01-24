@@ -27,7 +27,7 @@ function OnBoarding() {
           <div>
             <button
               onClick={() =>
-                navigation(FRONT_ROUTES.pages.Register.navigationPath)
+                navigation(FRONT_ROUTES.pages.Registration.navigationPath)
               }
               type="button"
             >
