@@ -1,12 +1,12 @@
 import LoginForm from "@/features/auth/login/ui/LoginForm";
+import AuthCompLogo from "@/shared/ui/authCompLogo/authCompLogo";
 
 function Authentication() {
   return (
-    <div>
-      <div>
-        <LoginForm />
-      </div>
-      <div></div>
+    <div className="flex">
+      <LoginForm />
+
+      <AuthCompLogo />
     </div>
   );
 }

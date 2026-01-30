@@ -115,6 +115,10 @@
   font-family:
     -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
     Arial, sans-serif;
+
+  @media (max-width: 480px) {
+    padding: 15px;
+  }
 }
 
 .contactless-block {
@@ -132,11 +136,30 @@
     opacity: 1;
     animation: fadeInUp 0.8s ease forwards;
   }
+
+  @media (max-width: 768px) {
+    padding: 40px 24px;
+    border-radius: 20px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 32px 20px;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  }
 }
 
 .image-container {
   margin-bottom: 40px;
   position: relative;
+
+  @media (max-width: 768px) {
+    margin-bottom: 32px;
+  }
+
+  @media (max-width: 480px) {
+    margin-bottom: 28px;
+  }
 }
 
 .placeholder-image {
@@ -176,6 +199,36 @@
     z-index: -1;
     animation: pulse 3s ease-in-out infinite;
   }
+
+  @media (max-width: 768px) {
+    width: 240px;
+    height: 240px;
+    box-shadow: 0 15px 40px rgba(255, 154, 118, 0.25);
+
+    &::before {
+      filter: blur(12px);
+    }
+  }
+
+  @media (max-width: 480px) {
+    width: 200px;
+    height: 200px;
+    box-shadow: 0 12px 35px rgba(255, 154, 118, 0.2);
+
+    &:hover {
+      transform: scale(1.03);
+    }
+
+    &::before {
+      filter: blur(10px);
+      inset: -3px;
+    }
+  }
+
+  @media (max-width: 360px) {
+    width: 180px;
+    height: 180px;
+  }
 }
 
 .phone-mockup {
@@ -195,6 +248,32 @@
     animation-play-state: paused;
     transform: rotate(-8deg) scale(1.05);
   }
+
+  @media (max-width: 768px) {
+    width: 120px;
+    height: 170px;
+    border-radius: 16px;
+    border: 5px solid #2c3e50;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.18);
+  }
+
+  @media (max-width: 480px) {
+    width: 100px;
+    height: 145px;
+    border-radius: 14px;
+    border: 4px solid #2c3e50;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+
+    &:hover {
+      transform: rotate(-8deg) scale(1.02);
+    }
+  }
+
+  @media (max-width: 360px) {
+    width: 90px;
+    height: 130px;
+    border-radius: 12px;
+  }
 }
 
 .phone-content {
@@ -207,11 +286,36 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 12px;
+
+  @media (max-width: 768px) {
+    border-radius: 11px;
+    padding: 14px;
+    gap: 10px;
+  }
+
+  @media (max-width: 480px) {
+    border-radius: 10px;
+    padding: 12px;
+    gap: 8px;
+  }
+
+  @media (max-width: 360px) {
+    padding: 10px;
+    gap: 6px;
+  }
 }
 
 .stars {
   font-size: 16px;
   animation: fadeInUp 0.5s ease 0.8s backwards;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 12px;
+  }
 }
 
 .text-lines {
@@ -219,6 +323,10 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
+
+  @media (max-width: 480px) {
+    gap: 5px;
+  }
 }
 
 .line {
@@ -242,6 +350,10 @@
   &.short {
     width: 60%;
   }
+
+  @media (max-width: 480px) {
+    height: 3px;
+  }
 }
 
 .icon {
@@ -254,6 +366,22 @@
   &:hover {
     transform: scale(1.2) rotate(10deg);
   }
+
+  @media (max-width: 768px) {
+    font-size: 40px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 32px;
+
+    &:hover {
+      transform: scale(1.1) rotate(10deg);
+    }
+  }
+
+  @media (max-width: 360px) {
+    font-size: 28px;
+  }
 }
 
 .dot {
@@ -263,6 +391,16 @@
   border-radius: 50%;
   opacity: 0.6;
   transition: all 0.3s ease;
+
+  @media (max-width: 768px) {
+    width: 10px;
+    height: 10px;
+  }
+
+  @media (max-width: 480px) {
+    width: 8px;
+    height: 8px;
+  }
 }
 
 .dot-1 {
@@ -272,6 +410,10 @@
   animation:
     dotFloat1 4s ease-in-out infinite,
     pulse 2s ease-in-out infinite;
+
+  @media (max-width: 480px) {
+    right: 10%;
+  }
 }
 
 .dot-2 {
@@ -281,6 +423,10 @@
   animation:
     dotFloat2 5s ease-in-out infinite,
     pulse 2.5s ease-in-out infinite;
+
+  @media (max-width: 480px) {
+    left: 15%;
+  }
 }
 
 .dot-3 {
@@ -290,24 +436,44 @@
   animation:
     dotFloat3 4.5s ease-in-out infinite,
     pulse 3s ease-in-out infinite;
+
+  @media (max-width: 480px) {
+    left: 8%;
+  }
 }
 
 .sparkle {
   position: absolute;
   font-size: 20px;
   animation: sparkle 2s ease-in-out infinite;
+
+  @media (max-width: 768px) {
+    font-size: 18px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 16px;
+  }
 }
 
 .sparkle-1 {
   top: 10%;
   right: 20%;
   animation-delay: 0.5s;
+
+  @media (max-width: 480px) {
+    right: 15%;
+  }
 }
 
 .sparkle-2 {
   bottom: 15%;
   right: 15%;
   animation-delay: 1.5s;
+
+  @media (max-width: 480px) {
+    right: 10%;
+  }
 }
 
 .progress-indicator {
@@ -315,6 +481,16 @@
   justify-content: center;
   gap: 8px;
   margin-bottom: 32px;
+
+  @media (max-width: 768px) {
+    margin-bottom: 28px;
+    gap: 6px;
+  }
+
+  @media (max-width: 480px) {
+    margin-bottom: 24px;
+    gap: 5px;
+  }
 }
 
 .progress-dot {
@@ -345,6 +521,15 @@
       animation: progressFill 1.5s ease-in-out infinite;
     }
   }
+
+  @media (max-width: 768px) {
+    width: 28px;
+  }
+
+  @media (max-width: 480px) {
+    width: 24px;
+    height: 3px;
+  }
 }
 
 .title {
@@ -354,6 +539,21 @@
   margin-bottom: 12px;
   line-height: 1.3;
   animation: fadeInUp 0.6s ease 0.4s backwards;
+
+  @media (max-width: 768px) {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 20px;
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+
+  @media (max-width: 360px) {
+    font-size: 18px;
+  }
 }
 
 .subtitle {
@@ -362,12 +562,39 @@
   margin-bottom: 32px;
   line-height: 1.5;
   animation: fadeInUp 0.6s ease 0.5s backwards;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    margin-bottom: 28px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 13px;
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 360px) {
+    font-size: 12px;
+  }
 }
 
 .brand {
   font-size: 24px;
   font-weight: 600;
   animation: fadeInUp 0.6s ease 0.6s backwards;
+
+  @media (max-width: 768px) {
+    font-size: 22px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 20px;
+  }
+
+  @media (max-width: 360px) {
+    font-size: 18px;
+  }
 }
 
 .brand-eat {
@@ -390,27 +617,57 @@
   }
 }
 
-// Media Queries
-@media (max-width: 768px) {
+// Дополнительные адаптивные настройки для очень маленьких экранов
+@media (max-width: 360px) {
+  .contactless-wrapper {
+    padding: 12px;
+  }
+
   .contactless-block {
-    padding: 40px 24px;
+    padding: 24px 16px;
+  }
+}
+
+// Оптимизация анимаций для мобильных устройств
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+// Ландшафтная ориентация для мобильных
+@media (max-width: 768px) and (orientation: landscape) {
+  .contactless-wrapper {
+    padding: 15px;
+  }
+
+  .contactless-block {
+    padding: 30px 24px;
   }
 
   .circle-bg {
-    width: 240px;
-    height: 240px;
+    width: 200px;
+    height: 200px;
   }
 
   .phone-mockup {
-    width: 120px;
-    height: 170px;
+    width: 100px;
+    height: 145px;
+  }
+
+  .image-container {
+    margin-bottom: 24px;
   }
 
   .title {
-    font-size: 24px;
+    font-size: 20px;
+    margin-bottom: 8px;
   }
 
   .subtitle {
-    font-size: 14px;
+    font-size: 13px;
+    margin-bottom: 20px;
   }
 }

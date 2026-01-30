@@ -1,57 +1,40 @@
-// import type { RootState } from "@/app/store/store";
-// import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
-// const BASE_URL = "https://easyfood-jwt.onrender.com/api/v1/";
-
-// export const baseApi = createApi({
-//   reducerPath: "baseApi",
-//   baseQuery: fetchBaseQuery({
-//     baseUrl: BASE_URL,
-//     credentials: "include",
-//     prepareHeaders: (headers, { getState }) => {
-//       const token = (getState() as RootState).auth.accessToken;
-//       if (token) headers.set("authorization", `Bearer ${token}`);
-//       return headers;
-//     },
-//   }),
-//   tagTypes: ["Users", "Auth", "Orders", "Dishes", "Restorants"],
-//   endpoints: () => ({}),
-// });
-
-import type {
-  BaseQueryFn,
-  FetchArgs,
-  FetchBaseQueryError,
-} from "@reduxjs/toolkit/query";
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type { RootState } from "@/app/store/store";
-
+import { logout, setCredentials } from "@/features/auth";
 import { API_ROUTES } from "@/shared/config/routes/apiRoutes";
-import { FRONT_ROUTES } from "@/shared/config/routes/frontRoutes";
-import { logout, setCredentials } from "@/features/auth/api/model/authSlice";
+import {
+  createApi,
+  fetchBaseQuery,
+  type BaseQueryFn,
+  type FetchArgs,
+  type FetchBaseQueryError,
+} from "@reduxjs/toolkit/query/react";
 import { Mutex } from "async-mutex";
 
-const BASE_URL = "https://easyfood-jwt.onrender.com/api/v1";
+interface User {
+  id: number;
+  email: string;
+}
 
 interface RefreshResponse {
-  user: {
-    id: string;
-    email: string;
-  };
+  user: User;
   accessToken: string;
 }
+
+interface ApiResponse<T> {
+  success: boolean;
+  data: T;
+}
+
+const BASE_URL = "https://easyfood-jwt.onrender.com/api/v1";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
   credentials: "include",
-  prepareHeaders: (headers, api) => {
-    const state = api.getState() as RootState;
-    const token = state.auth?.accessToken;
-
+  prepareHeaders: (headers, { getState }) => {
+    const token = (getState() as RootState).auth.accessToken;
     if (token) {
       headers.set("Authorization", `Bearer ${token}`);
     }
-
     return headers;
   },
 });
@@ -63,32 +46,75 @@ const baseQueryWithReauth: BaseQueryFn<
   unknown,
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
-  await mutex.waitForUnlock(); // якщо хтось вже робить refresh, чекаємо
+  await mutex.waitForUnlock();
 
-  const result = await baseQuery(args, api, extraOptions);
+  let result = await baseQuery(args, api, extraOptions);
 
-  if (result.error?.status === 401) {
+  if (result?.error?.status === 401) {
     if (!mutex.isLocked()) {
-      return mutex.runExclusive(async () => {
+      const release = await mutex.acquire();
+
+      try {
         const refreshResult = await baseQuery(
-          { url: API_ROUTES.auth.refresh, method: "POST" },
+          {
+            url: API_ROUTES.auth.refresh,
+            method: "POST",
+          },
           api,
           extraOptions
         );
+
         if (refreshResult.data) {
-          api.dispatch(setCredentials(refreshResult.data as RefreshResponse));
-          return baseQuery(args, api, extraOptions); // повторний запит
+          console.log("🔄 Refresh in baseQuery:", refreshResult.data);
+
+          // Проверяем структуру ответа
+          const isWrappedResponse = (
+            data: unknown
+          ): data is ApiResponse<RefreshResponse> => {
+            return (
+              typeof data === "object" &&
+              data !== null &&
+              "success" in data &&
+              "data" in data
+            );
+          };
+
+          const isDirectResponse = (data: unknown): data is RefreshResponse => {
+            return (
+              typeof data === "object" &&
+              data !== null &&
+              "user" in data &&
+              "accessToken" in data
+            );
+          };
+
+          if (isWrappedResponse(refreshResult.data)) {
+            // Бэкенд вернул {success: true, data: {user, accessToken}}
+            if (refreshResult.data.success && refreshResult.data.data) {
+              api.dispatch(setCredentials(refreshResult.data.data));
+              result = await baseQuery(args, api, extraOptions);
+            } else {
+              console.log("❌ Refresh failed, logging out");
+              api.dispatch(logout());
+            }
+          } else if (isDirectResponse(refreshResult.data)) {
+            // Уже трансформировано через transformResponse
+            api.dispatch(setCredentials(refreshResult.data));
+            result = await baseQuery(args, api, extraOptions);
+          } else {
+            console.log("❌ Unknown refresh response format, logging out");
+            api.dispatch(logout());
+          }
         } else {
+          console.log("❌ Refresh failed, logging out");
           api.dispatch(logout());
-          window.location.href = FRONT_ROUTES.pages.Authentication
-            .navigationPath as string;
-          return result;
         }
-      });
+      } finally {
+        release();
+      }
     } else {
-      // інші запити чекають поки mutex розблокується і повторюють запит
       await mutex.waitForUnlock();
-      return baseQuery(args, api, extraOptions);
+      result = await baseQuery(args, api, extraOptions);
     }
   }
 
@@ -101,3 +127,5 @@ export const baseApi = createApi({
   tagTypes: ["Users", "Auth", "Dishes", "Default"],
   endpoints: () => ({}),
 });
+
+export { mutex };

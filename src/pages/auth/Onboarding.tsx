@@ -1,10 +1,11 @@
 import { FRONT_ROUTES } from "@/shared/config/routes/frontRoutes";
+import AuthCompLogo from "@/shared/ui/authCompLogo/authCompLogo";
 import { useNavigate } from "react-router";
 
 function OnBoarding() {
   const navigation = useNavigate();
   return (
-    <div>
+    <div className="flex">
       <div>
         <div>
           <h2>Let’s Get Started 😁</h2>
@@ -36,7 +37,7 @@ function OnBoarding() {
           </div>
         </form>
       </div>
-      <div></div>
+      <AuthCompLogo />
     </div>
   );
 }

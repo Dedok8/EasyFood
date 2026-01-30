@@ -1,3 +1,5 @@
+import "../../styles/scss/base/logo/logo.scss";
+
 function LogoString() {
   return (
     <div className="logo-string">
