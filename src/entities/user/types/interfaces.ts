@@ -1,5 +1,3 @@
-// ===== Users =====
-
 export interface IUserDTO {
   id: number;
   username: string;
@@ -11,19 +9,15 @@ export interface IUserDTO {
   createdAt: string;
 }
 
-// Список юзерів
 export interface IUserResponseDTO {
   success: boolean;
   data: IUserDTO[];
 }
 
-// Один юзер
 export interface IUserSingleResponseDTO {
   success: boolean;
   data: IUserDTO;
 }
-
-// ===== Locations =====
 
 export interface ILocationDTO {
   id: number;
@@ -36,8 +30,6 @@ export interface ILocationResponseDTO {
   success: boolean;
   data: ILocationDTO[];
 }
-
-// ===== Cards =====
 
 export interface ICard {
   cardNumber: string;

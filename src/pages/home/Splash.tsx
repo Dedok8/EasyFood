@@ -1,31 +1,37 @@
+import type { RootState } from "@/app/store/store";
 import dish_1 from "@/assets/Splash/dish_1.png";
 import dish_2 from "@/assets/Splash/dish_2.png";
 
 import { FRONT_ROUTES } from "@/shared/config/routes/frontRoutes";
-import "@/shared/styles/scss/pages/splash.scss";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 import { useNavigate } from "react-router";
 
 function Splash() {
   const navigate = useNavigate();
+
+  const authenticated = useSelector(
+    (state: RootState) => !!state.auth.accessToken
+  );
   const [fade, setFade] = useState(false);
 
   useEffect(() => {
     const t1 = setTimeout(() => setFade(true), 2500);
-    const t2 = setTimeout(() => {
-      const next = localStorage.getItem("token")
-        ? FRONT_ROUTES.pages.ShareYourLocation.navigationPath
-        : FRONT_ROUTES.pages.Onboarding.navigationPath;
 
-      navigate(next);
+    const t2 = setTimeout(() => {
+      navigate(
+        authenticated
+          ? FRONT_ROUTES.pages.ShareYourLocation.navigationPath
+          : FRONT_ROUTES.pages.Onboarding.navigationPath
+      );
     }, 3000);
 
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
     };
-  }, [navigate]);
+  }, [navigate, authenticated]);
 
   return (
     <div className={`splash ${fade ? "splash--fadeout" : ""}`}>
