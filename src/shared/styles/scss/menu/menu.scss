@@ -1,0 +1,20 @@
+.menu {
+  &__link {
+    display: flex;
+    align-items: center;
+  }
+  &__icon--img {
+    width: toRem(24);
+    height: toRem(24);
+  }
+  &__icon--block {
+    width: toRem(48);
+    height: toRem(48);
+    background-color: #ffffff26;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    margin-right: toRem(16);
+  }
+}

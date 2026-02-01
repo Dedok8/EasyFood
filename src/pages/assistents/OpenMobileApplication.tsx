@@ -1,11 +1,7 @@
-import Aside from "@/shared/ui/aside/Aside";
+// import UserList from "@/widgets/User/UserList";
 
 function OpenMobileApplication() {
-  return (
-    <div>
-      <Aside />
-    </div>
-  );
+  return <div>open mob</div>;
 }
 
 export default OpenMobileApplication;

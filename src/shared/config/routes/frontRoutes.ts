@@ -111,6 +111,24 @@ export const FRONT_ROUTES = {
       navigationPath: (id: string) => `/order-tracking/${id}`,
       meta: { title: "Track Your Order", isInMenu: false, requireAuth: true },
     },
+    OrderHistory: {
+      path: "/order-history",
+      navigationPath: "/order-history",
+      meta: {
+        title: "Order History",
+        isInMenu: false,
+        requireAuth: true,
+      },
+    },
+    SetLocation: {
+      path: "/set-location",
+      navigationPath: "/set-location",
+      meta: {
+        title: "Set Location",
+        isInMenu: false,
+        requireAuth: true,
+      },
+    },
     ShareYourLocation: {
       path: "/share-your-location",
       navigationPath: "/share-your-location",
@@ -129,6 +147,15 @@ export const FRONT_ROUTES = {
         requireAuth: false,
       },
     },
+    MyRewards: {
+      path: "/my-reward",
+      navigationPath: "/my-reward",
+      meta: {
+        title: "My Reward",
+        isInMenu: false,
+        requireAuth: false,
+      },
+    },
     // EmailVerification: {
     //   path: "/email-verification",
     //   navigationPath: "/email-verification",
@@ -138,7 +165,24 @@ export const FRONT_ROUTES = {
     //     requireAuth: false,
     //   },
     // },
-
+    HelpPage: {
+      path: "/help-page",
+      navigationPath: "/help-page",
+      meta: {
+        title: "Help-page",
+        isInMenu: false,
+        requireAuth: false,
+      },
+    },
+    FullMenu: {
+      path: "/full-menu",
+      navigationPath: "/full-menu",
+      meta: {
+        title: "full-menu",
+        isInMenu: false,
+        requireAuth: false,
+      },
+    },
     Addresses: {
       path: "/profile/addresses",
       navigationPath: "/profile/addresses",

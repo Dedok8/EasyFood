@@ -1,10 +1,14 @@
+import Header from "@/widgets/layouts/Heder";
 import { Outlet } from "react-router";
 
 function Mainlayout() {
   return (
-    <main className="wrapper">
-      <Outlet />
-    </main>
+    <>
+      <Header />
+      <main className="wrapper">
+        <Outlet />
+      </main>
+    </>
   );
 }
 

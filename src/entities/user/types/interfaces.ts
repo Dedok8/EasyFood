@@ -3,7 +3,7 @@ export interface IUserDTO {
   username: string;
   email: string;
   phone: string;
-  avatarUrl: string | null;
+  avatarUrl: string;
   points: number;
   isAdmin: boolean;
   createdAt: string;

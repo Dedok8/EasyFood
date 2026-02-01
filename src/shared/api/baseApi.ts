@@ -1,6 +1,7 @@
 import type { RootState } from "@/app/store/store";
 import { logout, setCredentials } from "@/features/auth";
 import { API_ROUTES } from "@/shared/config/routes/apiRoutes";
+// import { FRONT_ROUTES } from "@/shared/config/routes/frontRoutes";
 import {
   createApi,
   fetchBaseQuery,
@@ -50,7 +51,10 @@ const baseQueryWithReauth: BaseQueryFn<
 
   let result = await baseQuery(args, api, extraOptions);
 
-  if (result?.error?.status === 401) {
+  const isLogoutRequest =
+    typeof args === "object" && args.url === API_ROUTES.auth.logout;
+
+  if (result?.error?.status === 401 && !isLogoutRequest) {
     if (!mutex.isLocked()) {
       const release = await mutex.acquire();
 
@@ -59,6 +63,7 @@ const baseQueryWithReauth: BaseQueryFn<
           {
             url: API_ROUTES.auth.refresh,
             method: "POST",
+            // credentials: "include",
           },
           api,
           extraOptions
@@ -67,7 +72,6 @@ const baseQueryWithReauth: BaseQueryFn<
         if (refreshResult.data) {
           console.log("🔄 Refresh in baseQuery:", refreshResult.data);
 
-          // Проверяем структуру ответа
           const isWrappedResponse = (
             data: unknown
           ): data is ApiResponse<RefreshResponse> => {
@@ -89,21 +93,23 @@ const baseQueryWithReauth: BaseQueryFn<
           };
 
           if (isWrappedResponse(refreshResult.data)) {
-            // Бэкенд вернул {success: true, data: {user, accessToken}}
             if (refreshResult.data.success && refreshResult.data.data) {
               api.dispatch(setCredentials(refreshResult.data.data));
               result = await baseQuery(args, api, extraOptions);
             } else {
               console.log("❌ Refresh failed, logging out");
               api.dispatch(logout());
+              // window.location.href =
+              //   FRONT_ROUTES.pages.Authentication.navigationPath;
             }
           } else if (isDirectResponse(refreshResult.data)) {
-            // Уже трансформировано через transformResponse
             api.dispatch(setCredentials(refreshResult.data));
             result = await baseQuery(args, api, extraOptions);
           } else {
             console.log("❌ Unknown refresh response format, logging out");
             api.dispatch(logout());
+            // window.location.href =
+            //   FRONT_ROUTES.pages.Authentication.navigationPath;
           }
         } else {
           console.log("❌ Refresh failed, logging out");
