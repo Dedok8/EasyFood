@@ -14,14 +14,4 @@ export default defineConfig({
   server: {
     open: true,
   },
-  css: {
-    preprocessorOptions: {
-      scss: {
-        additionalData: `
-  @use "sass:math";
-    @import "@/shared/styles/scss/env";
-`,
-      },
-    },
-  },
 });

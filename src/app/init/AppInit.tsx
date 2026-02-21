@@ -1,42 +1,26 @@
-import type { AppDispatch, RootState } from "@/app/store/store";
-import { logout } from "@/features/auth";
-import { useRefreshMutation } from "@/features/auth/api/authApi";
 import { useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useRefreshMutation } from "@/features/auth";
 
-function AppInit() {
+export function AppInit() {
   const [refresh] = useRefreshMutation();
-  const dispatch = useDispatch<AppDispatch>();
-  const initRef = useRef(false);
 
-  const rehydrated = useSelector(
-    (state: RootState) => state._persist?.rehydrated
-  );
+  const initialized = useRef(false);
 
   useEffect(() => {
-    if (!rehydrated) return;
-    if (initRef.current) return;
-    initRef.current = true;
+    if (initialized.current) return;
+
+    initialized.current = true;
 
     const init = async () => {
-      const hasRefreshToken = document.cookie.includes("refreshToken=");
-      if (!hasRefreshToken) {
-        return;
-      }
-
       try {
-        await refresh(undefined).unwrap();
-        console.log("✅ Token refreshed successfully");
-      } catch (error) {
-        console.log("⚠️ Refresh failed, clearing auth state", error);
-        dispatch(logout());
+        await refresh().unwrap();
+      } catch {
+        //
       }
     };
 
     init();
-  }, [rehydrated, refresh, dispatch]);
+  }, [refresh]);
 
   return null;
 }
-
-export default AppInit;

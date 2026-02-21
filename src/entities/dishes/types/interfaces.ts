@@ -1,15 +1,15 @@
 export interface IDish {
   id: number;
-  restaurantId: string;
+  restaurantId: number;
   name: string;
   description: string;
-  price: string;
-  imageUrl: string;
-  kcal: string;
-  weight: string;
-  proteins: string;
-  carbs: string;
-  fats: string;
+  price: number;
+  imageUrl: string | undefined;
+  kcal: number;
+  weight: number;
+  proteins: number;
+  carbs: number;
+  fats: number;
   rating: string;
   subcategoryId: string;
   isAvailable: string;

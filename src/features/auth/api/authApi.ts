@@ -3,7 +3,10 @@ import { API_ROUTES } from "@/shared/config/routes/apiRoutes";
 
 interface User {
   id: number;
-  email: string;
+  username: string;
+  avatarUrl: string | null;
+  isAdmin: boolean;
+  points: number;
 }
 
 interface AuthResponse {
@@ -23,7 +26,6 @@ export const authApi = baseApi.injectEndpoints({
         url: API_ROUTES.auth.login,
         method: "POST",
         body: credentials,
-        credentials: "include",
       }),
       transformResponse: (response: ApiResponse<AuthResponse>) => {
         return response.data;
@@ -33,14 +35,12 @@ export const authApi = baseApi.injectEndpoints({
       query: () => ({
         url: API_ROUTES.auth.logout,
         method: "POST",
-        credentials: "include",
       }),
     }),
     refresh: build.mutation<AuthResponse, void>({
       query: () => ({
         url: API_ROUTES.auth.refresh,
         method: "POST",
-        credentials: "include",
       }),
       transformResponse: (response: ApiResponse<AuthResponse>) => {
         return response.data;

@@ -1,7 +1,3 @@
-import type { RootState } from "@/app/store/store";
-import { logout, setCredentials } from "@/features/auth";
-import { API_ROUTES } from "@/shared/config/routes/apiRoutes";
-// import { FRONT_ROUTES } from "@/shared/config/routes/frontRoutes";
 import {
   createApi,
   fetchBaseQuery,
@@ -9,38 +5,41 @@ import {
   type FetchArgs,
   type FetchBaseQueryError,
 } from "@reduxjs/toolkit/query/react";
+
+import type { RootState } from "@/app/store/store";
+import { setCredentials, logout } from "@/features/auth";
+import { API_ROUTES } from "@/shared/config/routes/apiRoutes";
+
 import { Mutex } from "async-mutex";
-
-interface User {
-  id: number;
-  email: string;
-}
-
-interface RefreshResponse {
-  user: User;
-  accessToken: string;
-}
-
-interface ApiResponse<T> {
-  success: boolean;
-  data: T;
-}
 
 const BASE_URL = "https://easyfood-jwt.onrender.com/api/v1";
 
+const mutex = new Mutex();
+
+interface RefreshResponse {
+  user: {
+    id: number;
+    email: string;
+  };
+  accessToken: string;
+}
+
 const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
+
+  // КРИТИЧНО для HttpOnly cookies
   credentials: "include",
+
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.accessToken;
+
     if (token) {
       headers.set("Authorization", `Bearer ${token}`);
     }
+
     return headers;
   },
 });
-
-const mutex = new Mutex();
 
 const baseQueryWithReauth: BaseQueryFn<
   string | FetchArgs,
@@ -51,10 +50,11 @@ const baseQueryWithReauth: BaseQueryFn<
 
   let result = await baseQuery(args, api, extraOptions);
 
-  const isLogoutRequest =
-    typeof args === "object" && args.url === API_ROUTES.auth.logout;
-
-  if (result?.error?.status === 401 && !isLogoutRequest) {
+  if (
+    result.error?.status === 401 &&
+    typeof args !== "string" &&
+    args.url !== API_ROUTES.auth.refresh
+  ) {
     if (!mutex.isLocked()) {
       const release = await mutex.acquire();
 
@@ -63,56 +63,23 @@ const baseQueryWithReauth: BaseQueryFn<
           {
             url: API_ROUTES.auth.refresh,
             method: "POST",
-            // credentials: "include",
           },
           api,
           extraOptions
         );
 
         if (refreshResult.data) {
-          console.log("🔄 Refresh in baseQuery:", refreshResult.data);
+          const data = refreshResult.data as RefreshResponse;
 
-          const isWrappedResponse = (
-            data: unknown
-          ): data is ApiResponse<RefreshResponse> => {
-            return (
-              typeof data === "object" &&
-              data !== null &&
-              "success" in data &&
-              "data" in data
-            );
-          };
+          api.dispatch(
+            setCredentials({
+              user: data.user,
+              accessToken: data.accessToken,
+            })
+          );
 
-          const isDirectResponse = (data: unknown): data is RefreshResponse => {
-            return (
-              typeof data === "object" &&
-              data !== null &&
-              "user" in data &&
-              "accessToken" in data
-            );
-          };
-
-          if (isWrappedResponse(refreshResult.data)) {
-            if (refreshResult.data.success && refreshResult.data.data) {
-              api.dispatch(setCredentials(refreshResult.data.data));
-              result = await baseQuery(args, api, extraOptions);
-            } else {
-              console.log("❌ Refresh failed, logging out");
-              api.dispatch(logout());
-              // window.location.href =
-              //   FRONT_ROUTES.pages.Authentication.navigationPath;
-            }
-          } else if (isDirectResponse(refreshResult.data)) {
-            api.dispatch(setCredentials(refreshResult.data));
-            result = await baseQuery(args, api, extraOptions);
-          } else {
-            console.log("❌ Unknown refresh response format, logging out");
-            api.dispatch(logout());
-            // window.location.href =
-            //   FRONT_ROUTES.pages.Authentication.navigationPath;
-          }
+          result = await baseQuery(args, api, extraOptions);
         } else {
-          console.log("❌ Refresh failed, logging out");
           api.dispatch(logout());
         }
       } finally {
@@ -120,6 +87,7 @@ const baseQueryWithReauth: BaseQueryFn<
       }
     } else {
       await mutex.waitForUnlock();
+
       result = await baseQuery(args, api, extraOptions);
     }
   }
@@ -129,9 +97,10 @@ const baseQueryWithReauth: BaseQueryFn<
 
 export const baseApi = createApi({
   reducerPath: "api",
+
   baseQuery: baseQueryWithReauth,
-  tagTypes: ["Users", "Auth", "Dishes", "Default"],
+
+  tagTypes: ["Auth", "Users", "Restaurants", "Dishes"],
+
   endpoints: () => ({}),
 });
-
-export { mutex };

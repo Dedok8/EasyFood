@@ -30,7 +30,7 @@ function LoginForm() {
     setErrorMessage("");
     try {
       await login(values);
-      navigate(FRONT_ROUTES.pages.OpenMobileApplication.navigationPath);
+      navigate(FRONT_ROUTES.pages.ChangeLocation.navigationPath);
     } catch (err) {
       if (err instanceof Error) {
         setErrorMessage(err.message);

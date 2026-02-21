@@ -2,6 +2,7 @@ import type {
   IRestaurant,
   IRestaurantsResponse,
 } from "@/entities/restourants/types/interfaces";
+import type { ICreateRestoran } from "@/features/restorant/add-restorant/types/interfaces";
 import { baseApi } from "@/shared/api/baseApi";
 import { API_ROUTES } from "@/shared/config/routes/apiRoutes";
 
@@ -14,17 +15,17 @@ export const restorantsApi = baseApi.injectEndpoints({
         result
           ? [
               ...result.data.map((r) => ({
-                type: "Restorants" as const,
+                type: "Restaurants" as const,
                 id: r.id,
               })),
-              { type: "Restorants", id: "LIST" },
+              { type: "Restaurants", id: "LIST" },
             ]
-          : [{ type: "Restorants", id: "LIST" }],
+          : [{ type: "Restaurants", id: "LIST" }],
     }),
 
     getRestorantById: build.query<IRestaurant, { id: number }>({
       query: ({ id }) => API_ROUTES.restaurants.byId(id),
-      providesTags: (result, error, { id }) => [{ type: "Restorants", id }],
+      providesTags: (result, error, { id }) => [{ type: "Restaurants", id }],
     }),
 
     getRestorantsDishes: build.query<
@@ -33,19 +34,19 @@ export const restorantsApi = baseApi.injectEndpoints({
     >({
       query: ({ restaurantId }) => API_ROUTES.restaurants.dishes(restaurantId),
       providesTags: (result, error, { restaurantId }) => [
-        { type: "Restorants", id: restaurantId },
+        { type: "Restaurants", id: restaurantId },
       ],
     }),
 
     // POST ===============================
 
-    createRestorants: build.mutation<IRestaurant, IRestaurant>({
+    createRestorants: build.mutation<IRestaurant, ICreateRestoran>({
       query: (restorantData) => ({
         url: API_ROUTES.restaurants.createRestorant,
         method: "POST",
         body: restorantData,
       }),
-      invalidatesTags: [{ type: "Restorants", id: "LIST" }],
+      invalidatesTags: [{ type: "Restaurants", id: "LIST" }],
     }),
 
     // PUT ===============================
@@ -59,8 +60,8 @@ export const restorantsApi = baseApi.injectEndpoints({
         body: data,
       }),
       invalidatesTags: (result, error, { id }) => [
-        { type: "Restorants", id },
-        { type: "Restorants", id: "LIST" },
+        { type: "Restaurants", id },
+        { type: "Restaurants", id: "LIST" },
       ],
     }),
 
@@ -70,7 +71,7 @@ export const restorantsApi = baseApi.injectEndpoints({
         url: API_ROUTES.restaurants.byId(id),
         method: "DELETE",
       }),
-      invalidatesTags: [{ type: "Restorants", id: "LIST" }],
+      invalidatesTags: [{ type: "Restaurants", id: "LIST" }],
     }),
   }),
 });

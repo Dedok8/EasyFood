@@ -1,5 +1,7 @@
 import { useLogout } from "@/features/auth";
-import logoutIcon from "@/assets/LogOut/log-out.png";
+import { LogInIcon } from "lucide-react";
+// import logoutIcon from "@/assets/LogOut/log-out.png";
+
 function LogOut() {
   const { logout, isLoading, error } = useLogout();
 
@@ -9,7 +11,7 @@ function LogOut() {
   return (
     <div>
       <button onClick={logout}>
-        <img src={logoutIcon} alt="logout" />
+        <LogInIcon size={20} />
       </button>
     </div>
   );

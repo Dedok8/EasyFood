@@ -22,7 +22,7 @@ function Splash() {
     const t2 = setTimeout(() => {
       navigate(
         authenticated
-          ? FRONT_ROUTES.pages.ShareYourLocation.navigationPath
+          ? FRONT_ROUTES.pages.OpenMobileApplication.navigationPath
           : FRONT_ROUTES.pages.Onboarding.navigationPath
       );
     }, 3000);

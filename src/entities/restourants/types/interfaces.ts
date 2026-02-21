@@ -2,9 +2,9 @@ export interface IRestaurant {
   id: number;
   name: string;
   address: string;
-  price: string;
-  lat: string;
-  lng: string;
+  price: number;
+  lat: number;
+  lng: number;
   imageUrl: string;
   openHours: string;
   description: string;

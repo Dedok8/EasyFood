@@ -23,11 +23,11 @@ export const FRONT_ROUTES = {
       navigationPath: "/Registration",
       meta: { title: "Sign Up", isInMenu: false, requireAuth: false },
     },
-    OtpVerification: {
-      path: "/verify-otp",
-      navigationPath: "/verify-otp",
-      meta: { title: "OTP Verification", isInMenu: false, requireAuth: false },
-    },
+    // OtpVerification: {
+    //   path: "/verify-otp",
+    //   navigationPath: "/verify-otp",
+    //   meta: { title: "OTP Verification", isInMenu: false, requireAuth: false },
+    // },
 
     Home: {
       path: "/home",
@@ -36,7 +36,6 @@ export const FRONT_ROUTES = {
         title: "Discovery",
         isInMenu: true,
         requireAuth: true,
-        roles: [ROLES.USER],
       },
     },
     Favorites: {
@@ -46,7 +45,6 @@ export const FRONT_ROUTES = {
         title: "My Favorites",
         isInMenu: true,
         requireAuth: true,
-        roles: [ROLES.USER],
       },
     },
     MyOrders: {
@@ -56,7 +54,6 @@ export const FRONT_ROUTES = {
         title: "Order History",
         isInMenu: true,
         requireAuth: true,
-        roles: [ROLES.USER],
       },
     },
     Profile: {
@@ -66,7 +63,6 @@ export const FRONT_ROUTES = {
         title: "My Profile",
         isInMenu: true,
         requireAuth: true,
-        roles: [ROLES.USER],
       },
     },
 
@@ -144,7 +140,7 @@ export const FRONT_ROUTES = {
       meta: {
         title: "Open Mobile Application",
         isInMenu: false,
-        requireAuth: false,
+        requireAuth: true,
       },
     },
     MyRewards: {
@@ -153,7 +149,7 @@ export const FRONT_ROUTES = {
       meta: {
         title: "My Reward",
         isInMenu: false,
-        requireAuth: false,
+        requireAuth: true,
       },
     },
     // EmailVerification: {
@@ -180,7 +176,7 @@ export const FRONT_ROUTES = {
       meta: {
         title: "full-menu",
         isInMenu: false,
-        requireAuth: false,
+        requireAuth: true,
       },
     },
     Addresses: {
@@ -199,6 +195,34 @@ export const FRONT_ROUTES = {
         title: "Not Found",
         isInMenu: false,
         requireAuth: false,
+      },
+    },
+    SmartAssistant: {
+      path: "smart-assistant",
+      navigationPath: "/smart-assistant",
+      meta: {
+        title: "smart-assistant",
+        isInMenu: false,
+        requireAuth: true,
+      },
+    },
+    AdminPage: {
+      path: "admin-page",
+      navigationPath: "/admin-page",
+      meta: {
+        title: "admin-page",
+        isInMenu: false,
+        requireAuth: true,
+        roles: [ROLES.ADMIN],
+      },
+    },
+    ChangeLocation: {
+      path: "change-location",
+      navigationPath: "/change-location",
+      meta: {
+        title: "change-location",
+        isInMenu: false,
+        requireAuth: true,
       },
     },
     ForbiddenPage: {

@@ -1,4 +1,5 @@
 import type { IDish, IDishReview } from "@/entities/dishes/types/interfaces";
+import type { ICreateDish } from "@/features/dishes/add-dishes/types/interfaces";
 import { baseApi } from "@/shared/api/baseApi";
 import { API_ROUTES } from "@/shared/config/routes/apiRoutes";
 
@@ -10,10 +11,13 @@ export const dishesApi = baseApi.injectEndpoints({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: "Dishes" as const, id })),
-              { type: "Dishes", id: "LIST" },
+              ...result.map((dish) => ({
+                type: "Dishes" as const,
+                id: dish.id,
+              })),
+              { type: "Dishes" as const, id: "LIST" },
             ]
-          : [{ type: "Dishes", id: "LIST" }],
+          : [{ type: "Dishes" as const, id: "LIST" }],
     }),
 
     getDishesById: build.query<IDish, { id: number }>({
@@ -33,11 +37,11 @@ export const dishesApi = baseApi.injectEndpoints({
     }),
     //POST ===========================================
 
-    createDish: build.mutation<IDish, { id: number; dish: Partial<IDish> }>({
-      query: ({ id, dish }) => ({
-        url: API_ROUTES.dishes.create(id),
+    createDish: build.mutation<IDish, ICreateDish>({
+      query: (dishData) => ({
+        url: API_ROUTES.dishes.create(dishData.restaurantId),
         method: "POST",
-        body: dish,
+        body: dishData,
       }),
       invalidatesTags: [{ type: "Dishes", id: "LIST" }],
     }),
