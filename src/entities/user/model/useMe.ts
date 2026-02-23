@@ -1,4 +1,4 @@
-import type { RootState } from "@/app/store/store";
+import type { RootState } from "@/app/store/types/storeTypes";
 import { useGetMeQuery } from "@/entities/user/api/userApi";
 import { useSelector } from "react-redux";
 

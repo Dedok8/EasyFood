@@ -13,5 +13,6 @@ export default defineConfig({
   },
   server: {
     open: true,
+    hmr: true,
   },
 });

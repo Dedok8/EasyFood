@@ -1,19 +1,20 @@
-import type { RootState } from "@/app/store/store";
-import { authApi } from "@/features/auth/api/authApi";
+import type { RootState } from "@/app/store/types/storeTypes";
+// import { authApi } from "@/features/auth/api/authApi";
+import type { IUser } from "@/features/auth/types/interfaces";
 import {
   createSlice,
-  isAnyOf,
+  // isAnyOf,
   type PayloadAction,
   type SerializedError,
 } from "@reduxjs/toolkit";
 
-interface IUser {
-  id: number;
-  username: string;
-  avatarUrl: string | null;
-  isAdmin: boolean;
-  points: number;
-}
+// interface IUser {
+//   id: number;
+//   username: string;
+//   avatarUrl: string | null;
+//   isAdmin: boolean;
+//   points: number;
+// }
 
 interface IAuthSlice {
   user: IUser | null;
@@ -51,56 +52,56 @@ const authSlice = createSlice({
       state.loading = false;
     },
   },
-  extraReducers: (builder) => {
-    builder
-      // Pending states
-      .addMatcher(
-        isAnyOf(
-          authApi.endpoints.login.matchPending,
-          authApi.endpoints.refresh.matchPending,
-          authApi.endpoints.logout.matchPending
-        ),
-        (state) => {
-          state.loading = true;
-          state.error = null;
-        }
-      )
-      // Login & Refresh success - используем setCredentials
-      .addMatcher(
-        isAnyOf(
-          authApi.endpoints.login.matchFulfilled,
-          authApi.endpoints.refresh.matchFulfilled
-        ),
-        (
-          state,
-          action: PayloadAction<{ user: IUser; accessToken: string }>
-        ) => {
-          state.user = action.payload.user;
-          state.accessToken = action.payload.accessToken;
-          state.loading = false;
-          state.error = null;
-        }
-      )
-      // Logout success
-      .addMatcher(authApi.endpoints.logout.matchFulfilled, (state) => {
-        state.user = null;
-        state.accessToken = null;
-        state.loading = false;
-        state.error = null;
-      })
-      // All rejections
-      .addMatcher(
-        isAnyOf(
-          authApi.endpoints.login.matchRejected,
-          authApi.endpoints.refresh.matchRejected,
-          authApi.endpoints.logout.matchRejected
-        ),
-        (state, action) => {
-          state.loading = false;
-          state.error = action.error ?? null;
-        }
-      );
-  },
+  // extraReducers: (builder) => {
+  //   builder
+  //     // Pending states
+  //     .addMatcher(
+  //       isAnyOf(
+  //         authApi.endpoints.login.matchPending,
+  //         authApi.endpoints.refresh.matchPending,
+  //         authApi.endpoints.logout.matchPending
+  //       ),
+  //       (state) => {
+  //         state.loading = true;
+  //         state.error = null;
+  //       }
+  //     )
+  //     // Login & Refresh success - используем setCredentials
+  //     .addMatcher(
+  //       isAnyOf(
+  //         authApi.endpoints.login.matchFulfilled,
+  //         authApi.endpoints.refresh.matchFulfilled
+  //       ),
+  //       (
+  //         state,
+  //         action: PayloadAction<{ user: IUser; accessToken: string }>
+  //       ) => {
+  //         state.user = action.payload.user;
+  //         state.accessToken = action.payload.accessToken;
+  //         state.loading = false;
+  //         state.error = null;
+  //       }
+  //     )
+  //     // Logout success
+  //     .addMatcher(authApi.endpoints.logout.matchFulfilled, (state) => {
+  //       state.user = null;
+  //       state.accessToken = null;
+  //       state.loading = false;
+  //       state.error = null;
+  //     })
+  //     // All rejections
+  //     .addMatcher(
+  //       isAnyOf(
+  //         authApi.endpoints.login.matchRejected,
+  //         authApi.endpoints.refresh.matchRejected,
+  //         authApi.endpoints.logout.matchRejected
+  //       ),
+  //       (state, action) => {
+  //         state.loading = false;
+  //         state.error = action.error ?? null;
+  //       }
+  //     );
+  // },
 });
 
 export const { setCredentials, logout } = authSlice.actions;

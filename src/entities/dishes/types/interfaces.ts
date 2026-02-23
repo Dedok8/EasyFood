@@ -4,15 +4,15 @@ export interface IDish {
   name: string;
   description: string;
   price: number;
-  imageUrl: string | undefined;
+  imageUrl: string;
   kcal: number;
   weight: number;
   proteins: number;
   carbs: number;
   fats: number;
-  rating: string;
-  subcategoryId: string;
-  isAvailable: string;
+  rating: number;
+  subcategoryId: number;
+  isAvailable: boolean;
 }
 
 export interface IDishReview {

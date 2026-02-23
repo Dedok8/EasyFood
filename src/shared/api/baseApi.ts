@@ -6,21 +6,19 @@ import {
   type FetchBaseQueryError,
 } from "@reduxjs/toolkit/query/react";
 
-import type { RootState } from "@/app/store/store";
-import { setCredentials, logout } from "@/features/auth";
+import { setCredentials, logout } from "@/features/auth/api/model/authSlice";
 import { API_ROUTES } from "@/shared/config/routes/apiRoutes";
 
 import { Mutex } from "async-mutex";
+import type { IUser } from "@/features/auth/types/interfaces";
+import type { RootState } from "@/app/store/types/storeTypes";
 
 const BASE_URL = "https://easyfood-jwt.onrender.com/api/v1";
 
 const mutex = new Mutex();
 
 interface RefreshResponse {
-  user: {
-    id: number;
-    email: string;
-  };
+  user: IUser;
   accessToken: string;
 }
 

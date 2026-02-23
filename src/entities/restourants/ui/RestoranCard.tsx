@@ -12,8 +12,6 @@ interface Props {
 function RestaurantsCard({ restoran, isSelected, onSelect }: Props) {
   const user = useSelector((state: RootState) => state.auth.user);
 
-  console.log(user);
-
   const isAdmin = !!user?.isAdmin;
 
   return (
@@ -37,9 +35,9 @@ function RestaurantsCard({ restoran, isSelected, onSelect }: Props) {
           {isSelected && <div className="w-3 h-3 rounded-full bg-orange-500" />}
         </div>
         {isAdmin && (
-          <div onClick={(e) => e.stopPropagation()}>
-            <DeleteBtnRestauran restoranId={restoran.id} />
-          </div>
+          // <div onClick={(e) => e.stopPropagation()}>
+          <DeleteBtnRestauran restoranId={restoran.id} />
+          // </div>
         )}
       </div>
     </div>

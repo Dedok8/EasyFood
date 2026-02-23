@@ -4,7 +4,7 @@ import { useState } from "react";
 import type { ICreateDish } from "@/features/dishes/add-dishes/types/interfaces";
 import type { IUseFormDishesProps } from "@/features/dishes/form-dishes/types/interfaces";
 
-export function useFormDishes({ onSubmit, initialData }: IUseFormDishesProps) {
+export function useFormDish({ onSubmit, initialData }: IUseFormDishesProps) {
   const [form, setForm] = useState<ICreateDish>({
     restaurantId: initialData?.restaurantId ?? 0,
     name: initialData?.name ?? "",
@@ -16,9 +16,9 @@ export function useFormDishes({ onSubmit, initialData }: IUseFormDishesProps) {
     proteins: initialData?.proteins ?? 0,
     carbs: initialData?.carbs ?? 0,
     fats: initialData?.fats ?? 0,
-    rating: initialData?.rating ?? "",
-    subcategoryId: initialData?.subcategoryId ?? "",
-    isAvailable: initialData?.isAvailable ?? "",
+    rating: initialData?.rating ?? 0,
+    subcategoryId: initialData?.subcategoryId ?? 0,
+    isAvailable: initialData?.isAvailable ?? false,
   });
 
   const handleChange = (
@@ -33,11 +33,16 @@ export function useFormDishes({ onSubmit, initialData }: IUseFormDishesProps) {
       "proteins",
       "carbs",
       "fats",
+      "rating",
+      "subcategoryId",
     ];
-
     setForm((prev) => ({
       ...prev,
-      [name]: numberFields.includes(name) ? Number(value) : value,
+      [name]: numberFields.includes(name)
+        ? Number(value)
+        : name === "isAvailable"
+          ? (e.target as HTMLInputElement).checked
+          : value,
     }));
   };
 
@@ -47,15 +52,15 @@ export function useFormDishes({ onSubmit, initialData }: IUseFormDishesProps) {
       name: "",
       description: "",
       price: 0,
-      imageUrl: null,
+      imageUrl: "",
       kcal: 0,
       weight: 0,
       proteins: 0,
       carbs: 0,
       fats: 0,
-      rating: "",
-      subcategoryId: "",
-      isAvailable: "",
+      rating: 0,
+      subcategoryId: 0,
+      isAvailable: false,
     });
   };
 

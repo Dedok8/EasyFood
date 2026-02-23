@@ -1,31 +1,36 @@
 import { setSelectedRestaurant } from "@/entities/restourants/api/model/resttorantsSlice";
 import { useAllRestaurants } from "@/entities/restourants/model/useAllRestaurants";
 import RestaurantsCard from "@/entities/restourants/ui/RestoranCard";
-import { useAppDispatch, useAppSelector } from "@/shared/hook/useSelector";
+import { FRONT_ROUTES } from "@/shared/config/routes/frontRoutes";
+import { createSlug } from "@/shared/hooks/useRouterSlug";
+import { useAppDispatch, useAppSelector } from "@/shared/hooks/useSelector";
+import { useNavigate } from "react-router";
 
 function SetLocation() {
   const { restaurants, isLoading, isError } = useAllRestaurants();
-
   const dispatch = useAppDispatch();
   const selectedRestaurantId = useAppSelector(
     (state) => state.restaurant.selectedRestaurantId
   );
-
-  if (isLoading) {
-    return <div>Loading restaurants...</div>;
-  }
-
-  if (isError) {
-    return <div className=" text-red-500">Error loading restaurants</div>;
-  }
-
-  const handleConfirm = () => {
-    if (selectedRestaurantId) {
-      console.log("Confirmed:", selectedRestaurantId);
-    }
-  };
+  const navigate = useNavigate();
 
   const allRestaurants = restaurants?.data ?? [];
+
+  const handleConfirm = () => {
+    if (!selectedRestaurantId) return;
+
+    const restaurant = allRestaurants.find(
+      (r) => r.id === selectedRestaurantId
+    );
+    if (!restaurant) return;
+
+    const slug = createSlug(restaurant.name);
+    navigate(FRONT_ROUTES.pages.FullMenu.navigationPath(slug));
+  };
+
+  if (isLoading) return <div>Loading restaurants...</div>;
+  if (isError)
+    return <div className="text-red-500">Error loading restaurants</div>;
 
   return (
     <div>
@@ -38,11 +43,9 @@ function SetLocation() {
         />
       ))}
       <div>
-        <div>
-          {selectedRestaurantId && (
-            <button onClick={handleConfirm}>Підтвердити</button>
-          )}
-        </div>
+        {selectedRestaurantId && (
+          <button onClick={handleConfirm}>Підтвердити</button>
+        )}
       </div>
     </div>
   );

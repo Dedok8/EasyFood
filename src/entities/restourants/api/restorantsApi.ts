@@ -1,4 +1,5 @@
 import type {
+  IDishesResponse,
   IRestaurant,
   IRestaurantsResponse,
 } from "@/entities/restourants/types/interfaces";
@@ -28,15 +29,15 @@ export const restorantsApi = baseApi.injectEndpoints({
       providesTags: (result, error, { id }) => [{ type: "Restaurants", id }],
     }),
 
-    getRestorantsDishes: build.query<
-      IRestaurantsResponse,
-      { restaurantId: number }
-    >({
-      query: ({ restaurantId }) => API_ROUTES.restaurants.dishes(restaurantId),
-      providesTags: (result, error, { restaurantId }) => [
-        { type: "Restaurants", id: restaurantId },
-      ],
-    }),
+    getRestorantsDishes: build.query<IDishesResponse, { restaurantId: number }>(
+      {
+        query: ({ restaurantId }) =>
+          API_ROUTES.restaurants.dishes(restaurantId),
+        providesTags: (result, error, { restaurantId }) => [
+          { type: "Restaurants", id: restaurantId },
+        ],
+      }
+    ),
 
     // POST ===============================
 

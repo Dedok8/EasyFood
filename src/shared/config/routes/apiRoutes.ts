@@ -35,9 +35,10 @@ export const API_ROUTES = {
     recommended: "/dishes/recommended",
     byId: (id: number) => `/dishes/${id}`,
     reviews: (id: number) => `/dishes/${id}/reviews`,
-    create: (restaurantId: number) => `/restaurants/${restaurantId}/dishes`,
-    delete: (restaurantId: number, dishId: number) =>
-      `/restaurants/${restaurantId}/dishes/${dishId}`,
+    // create: (restaurantId: number) => `/restaurants/${restaurantId}/dishes`,
+    create: "/dishes",
+    // delete: (restaurantId: number, dishId: number) =>
+    //   `/restaurants/${restaurantId}/dishes/${dishId}`,
     search: "/dishes/search",
   },
 

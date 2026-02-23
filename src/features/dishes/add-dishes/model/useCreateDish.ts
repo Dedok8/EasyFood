@@ -7,9 +7,11 @@ export function useCreateDish() {
   const handleCreateDish = async (dishData: ICreateDish) => {
     try {
       const result = await createDish(dishData).unwrap();
-      console.log("Ресторан доданий:", result);
-    } catch (error) {
+      console.log("Страва додана:", result);
+    } catch (error: unknown) {
+      const err = error as { data?: unknown };
       console.log("Failed create dish", error);
+      console.log("Error details:", JSON.stringify(err?.data, null, 2));
     }
   };
 

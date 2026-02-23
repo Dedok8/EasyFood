@@ -39,7 +39,7 @@ export const dishesApi = baseApi.injectEndpoints({
 
     createDish: build.mutation<IDish, ICreateDish>({
       query: (dishData) => ({
-        url: API_ROUTES.dishes.create(dishData.restaurantId),
+        url: API_ROUTES.dishes.create,
         method: "POST",
         body: dishData,
       }),
@@ -47,27 +47,23 @@ export const dishesApi = baseApi.injectEndpoints({
     }),
 
     // PUT ===========================================
-    updateDish: build.mutation<
-      IDish,
-      { restaurantId: number; dishId: number; dish: Partial<IDish> }
-    >({
-      query: ({ restaurantId, dishId, dish }) => ({
-        url: API_ROUTES.dishes.create(restaurantId) + `/${dishId}`,
-        method: "PUT",
-        body: dish,
-      }),
-      invalidatesTags: (result, error, { dishId }) => [
-        { type: "Dishes", id: dishId },
-      ],
-    }),
+    updateDish: build.mutation<IDish, { dishId: number; dish: Partial<IDish> }>(
+      {
+        query: ({ dishId, dish }) => ({
+          url: `${API_ROUTES.dishes.all}/${dishId}`,
+          method: "PUT",
+          body: dish,
+        }),
+        invalidatesTags: (result, error, { dishId }) => [
+          { type: "Dishes", id: dishId },
+        ],
+      }
+    ),
 
     // DELETE ===========================================
-    deleteDish: build.mutation<
-      { success: boolean; id: number },
-      { restaurantId: number; dishId: number }
-    >({
-      query: ({ restaurantId, dishId }) => ({
-        url: API_ROUTES.dishes.delete(restaurantId, dishId),
+    deleteDish: build.mutation<{ success: boolean; id: number }, number>({
+      query: (dishId) => ({
+        url: `${API_ROUTES.dishes.all}/${dishId}`,
         method: "DELETE",
       }),
       invalidatesTags: [{ type: "Dishes", id: "LIST" }],

@@ -1,17 +1,30 @@
+import { configureStore } from "@reduxjs/toolkit";
+import { baseApi } from "@/shared/api/baseApi";
 import authReducer from "@/features/auth/api/model/authSlice";
 import restorantReducer from "@/entities/restourants/api/model/resttorantsSlice";
-import { baseApi } from "@/shared/api/baseApi";
-import { configureStore } from "@reduxjs/toolkit";
+import cartReducer from "@/entities/dishes/api/model/cartSlice";
+
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+
+const cartPersistConfig = {
+  key: "cart",
+  storage,
+};
+
+const persistedCartReducer = persistReducer(cartPersistConfig, cartReducer);
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     restaurant: restorantReducer,
+    cart: persistedCartReducer,
     [baseApi.reducerPath]: baseApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(baseApi.middleware),
+    getDefaultMiddleware({ serializableCheck: false }).concat(
+      baseApi.middleware
+    ),
 });
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+export const persistor = persistStore(store);

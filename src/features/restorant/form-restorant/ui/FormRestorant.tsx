@@ -1,7 +1,7 @@
 import { useFormRestorant } from "@/features/restorant/form-restorant/model/useFormRestorant";
 import type { IUseFormRestorantProps } from "@/features/restorant/form-restorant/types/interfaces";
 
-export function FormRestorant({
+function FormRestorant({
   onSubmit,
   initialData,
   isLoading,
@@ -201,3 +201,5 @@ export function FormRestorant({
     </form>
   );
 }
+
+export default FormRestorant;

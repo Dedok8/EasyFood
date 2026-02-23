@@ -1,9 +1,9 @@
 import { useLogoutMutation } from "@/features/auth/api/authApi";
 import { useDispatch } from "react-redux";
 import { logout as logoutAction } from "@/features/auth/api/model/authSlice";
-import type { AppDispatch } from "@/app/store/store";
 
 import { FRONT_ROUTES } from "@/shared/config/routes/frontRoutes";
+import type { AppDispatch } from "@/app/store/types/storeTypes";
 
 export function useLogout() {
   const [logoutApi, { isLoading, error }] = useLogoutMutation();

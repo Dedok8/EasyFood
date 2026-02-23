@@ -1,11 +1,20 @@
+import type { RootState } from "@/app/store/store";
+import { addToCart } from "@/entities/dishes/api/model/cartSlice";
 import type { IDish } from "@/entities/dishes/types/interfaces";
+import DeleteBtnDish from "@/features/dishes/delete-dishes/ui/DeleteDishBtn";
+import { useAppDispatch } from "@/shared/hooks/useSelector";
+import { useSelector } from "react-redux";
 
-interface Props {
-  dish: IDish;
-  onAdd: (dish: IDish) => void;
-}
+function DishCart({ dish }: { dish: IDish }) {
+  const dispatch = useAppDispatch();
 
-function DishCart({ dish, onAdd }: Props) {
+  const user = useSelector((state: RootState) => state.auth.user);
+
+  const isAdmin = !!user?.isAdmin;
+
+  const handleAdd = () => {
+    dispatch(addToCart(dish));
+  };
   return (
     <div className="flex items-center gap-4 p-4 bg-white rounded-2xl shadow-sm">
       <img
@@ -20,17 +29,17 @@ function DishCart({ dish, onAdd }: Props) {
           ⭐ <span>{dish.rating}</span>
           {/* <span className="text-gray-400">({dish.reviewsCount} reviews)</span> */}
         </div>
-        <p className="text-orange-500 font-semibold mt-1">
-          $ {dish.price.toFixed(2)}
-        </p>
+        <p className="text-orange-500 font-semibold mt-1">$ {dish.price}</p>
       </div>
 
       <button
-        onClick={() => onAdd(dish)}
+        onClick={handleAdd}
         className="w-9 h-9 rounded-full bg-orange-100 text-orange-500 text-xl flex items-center justify-center hover:bg-orange-500 hover:text-white transition"
       >
         +
       </button>
+
+      {isAdmin && <DeleteBtnDish dishId={dish.id} />}
     </div>
   );
 }

@@ -9,7 +9,7 @@ export interface ICreateDish {
   proteins: number;
   carbs: number;
   fats: number;
-  rating: string;
-  subcategoryId: string;
-  isAvailable: string;
+  rating: number;
+  subcategoryId: number;
+  isAvailable: boolean;
 }

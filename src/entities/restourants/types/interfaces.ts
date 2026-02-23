@@ -1,3 +1,5 @@
+import type { IDish } from "@/entities/dishes/types/interfaces";
+
 export interface IRestaurant {
   id: number;
   name: string;
@@ -13,4 +15,8 @@ export interface IRestaurant {
 
 export interface IRestaurantsResponse {
   data: IRestaurant[];
+}
+
+export interface IDishesResponse {
+  data: IDish[];
 }

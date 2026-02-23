@@ -1,5 +1,5 @@
 import { useGetRestorantsDishesQuery } from "@/entities/restourants/api/restorantsApi";
-import { useAppSelector } from "@/shared/hook/useSelector";
+import { useAppSelector } from "@/shared/hooks/useSelector";
 
 export function useMenuRestaurant() {
   const selectedRestaurantId = useAppSelector(

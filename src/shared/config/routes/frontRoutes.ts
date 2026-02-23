@@ -171,8 +171,8 @@ export const FRONT_ROUTES = {
       },
     },
     FullMenu: {
-      path: "/full-menu",
-      navigationPath: "/full-menu",
+      path: ":restaurantSlug/full-menu",
+      navigationPath: (slug: string) => `/${slug}/full-menu`,
       meta: {
         title: "full-menu",
         isInMenu: false,
