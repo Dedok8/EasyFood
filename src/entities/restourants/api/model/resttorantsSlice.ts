@@ -8,11 +8,11 @@ const initialState: RestaurantState = {
   selectedRestaurantId: null,
 };
 
-const restaurantSlice = createSlice({
+export const restaurantSlice = createSlice({
   name: "restaurant",
   initialState,
   reducers: {
-    setSelectedRestaurant: (state, action: PayloadAction<number | null>) => {
+    setSelectedRestaurant: (state, action: PayloadAction<number>) => {
       state.selectedRestaurantId = action.payload;
     },
   },

@@ -25,7 +25,6 @@ interface RefreshResponse {
 const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
 
-  // КРИТИЧНО для HttpOnly cookies
   credentials: "include",
 
   prepareHeaders: (headers, { getState }) => {
@@ -98,7 +97,7 @@ export const baseApi = createApi({
 
   baseQuery: baseQueryWithReauth,
 
-  tagTypes: ["Auth", "Users", "Restaurants", "Dishes"],
+  tagTypes: ["Auth", "Users", "Restaurants", "Dishes", "Orders"],
 
   endpoints: () => ({}),
 });

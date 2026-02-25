@@ -1,54 +1,21 @@
-import { appRouterRoutes } from "@/app/router/appRouterRoutes";
-import { authCheckLoader } from "@/app/router/authCheckLoader";
-import Splash from "@/pages/home/Splash";
-import Mainlayout from "@/widgets/layouts/MainLayout";
+import { createBrowserRouter, type LoaderFunctionArgs } from "react-router";
 import { Mutex } from "async-mutex";
-import type { LoaderFunctionArgs } from "react-router";
+import { authCheckLoader } from "./authCheckLoader";
 
-import { createBrowserRouter } from "react-router";
+import { appRouterRoutes } from "./appRouterRoutes";
+import Splash from "@/pages/home/Splash";
+
+import RootLayout from "@/widgets/layouts/RootLayout";
+import { rootLoader } from "@/shared/hooks/useRouteLoader";
 
 const refreshMutex = new Mutex();
-
 const authLoader = authCheckLoader({ refreshMutex });
-
-// export const router = createBrowserRouter([
-//   {
-//     path: "/",
-//     element: <Mainlayout />,
-//     HydrateFallback: () => (
-//       <div className="flex">
-//         <p>Loading app...</p>
-//       </div>
-//     ),
-//     children: appRouterRoutes.map((route) => ({
-//       ...route,
-//       loader: (args) => authLoader(args, route),
-//     })),
-//   },
-// ]);
-
-// export const router = createBrowserRouter([
-//   {
-//     path: "/",
-//     HydrateFallback: () => (
-//       <div className="flex">
-//         <p>Loading app...</p>
-//       </div>
-//     ),
-//     children: [
-//       { index: true, element: <Mainlayout /> },
-//       ...appRouterRoutes.map((route) => ({
-//         ...route,
-//         loader: (args) => authLoader(args, route),
-//       })),
-//     ],
-//   },
-// ]);
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <Mainlayout />,
+    element: <RootLayout />,
+    loader: rootLoader,
     HydrateFallback: () => (
       <div className="flex">
         <p>Loading app...</p>

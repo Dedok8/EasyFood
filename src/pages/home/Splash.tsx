@@ -1,4 +1,4 @@
-import type { RootState } from "@/app/store/store";
+import type { RootState } from "@/app/store/types/storeTypes";
 import dish_1 from "@/assets/Splash/dish_1.png";
 import dish_2 from "@/assets/Splash/dish_2.png";
 

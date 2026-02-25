@@ -1,24 +1,27 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { baseApi } from "@/shared/api/baseApi";
 import authReducer from "@/features/auth/api/model/authSlice";
-import restorantReducer from "@/entities/restourants/api/model/resttorantsSlice";
-import cartReducer from "@/entities/dishes/api/model/cartSlice";
-
+import restaurantReducer from "@/entities/restourants/api/model/resttorantsSlice";
+import cartReducer from "@/entities/orders/api/model/cartSlice";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-const cartPersistConfig = {
-  key: "cart",
+const persistConfig = {
+  key: "restaurant",
   storage,
+  whitelist: ["selectedRestaurantId"],
 };
 
-const persistedCartReducer = persistReducer(cartPersistConfig, cartReducer);
+const persistedRestaurantReducer = persistReducer(
+  persistConfig,
+  restaurantReducer
+);
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
-    restaurant: restorantReducer,
-    cart: persistedCartReducer,
+    restaurant: persistedRestaurantReducer,
+    cart: cartReducer,
     [baseApi.reducerPath]: baseApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>

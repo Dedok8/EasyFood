@@ -1,8 +1,11 @@
-import type { RootState } from "@/app/store/store";
-import { addToCart } from "@/entities/dishes/api/model/cartSlice";
+import type { RootState } from "@/app/store/types/storeTypes";
 import type { IDish } from "@/entities/dishes/types/interfaces";
+import {
+  addToCart,
+  decrementFromCart,
+} from "@/entities/orders/api/model/cartSlice";
 import DeleteBtnDish from "@/features/dishes/delete-dishes/ui/DeleteDishBtn";
-import { useAppDispatch } from "@/shared/hooks/useSelector";
+import { useAppDispatch, useAppSelector } from "@/shared/hooks/useSelector";
 import { useSelector } from "react-redux";
 
 function DishCart({ dish }: { dish: IDish }) {
@@ -12,9 +15,18 @@ function DishCart({ dish }: { dish: IDish }) {
 
   const isAdmin = !!user?.isAdmin;
 
-  const handleAdd = () => {
-    dispatch(addToCart(dish));
-  };
+  // const handleAdd = () => {
+  //   dispatch(addToCart(dish));
+
+  //   console.log("click!", dish);
+  // };
+
+  const quantity = useAppSelector(
+    (state: RootState) =>
+      state.cart.items.find((i) => i.dish.id === dish.id)?.quantity ?? 0
+  );
+  console.log(quantity);
+
   return (
     <div className="flex items-center gap-4 p-4 bg-white rounded-2xl shadow-sm">
       <img
@@ -32,13 +44,32 @@ function DishCart({ dish }: { dish: IDish }) {
         <p className="text-orange-500 font-semibold mt-1">$ {dish.price}</p>
       </div>
 
-      <button
-        onClick={handleAdd}
-        className="w-9 h-9 rounded-full bg-orange-100 text-orange-500 text-xl flex items-center justify-center hover:bg-orange-500 hover:text-white transition"
-      >
-        +
-      </button>
-
+      {quantity === 0 ? (
+        <button
+          onClick={() => dispatch(addToCart(dish))}
+          className="w-9 h-9 rounded-full bg-orange-100 text-orange-500 text-xl flex items-center justify-center hover:bg-orange-500 hover:text-white transition"
+        >
+          +
+        </button>
+      ) : (
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => dispatch(decrementFromCart(dish.id))}
+            className="w-9 h-9 rounded-full bg-orange-100 text-orange-500 text-xl flex items-center justify-center hover:bg-orange-500 hover:text-white transition"
+          >
+            −
+          </button>
+          <span className="w-5 text-center font-semibold text-gray-800">
+            {quantity}
+          </span>
+          <button
+            onClick={() => dispatch(addToCart(dish))}
+            className="w-9 h-9 rounded-full bg-orange-100 text-orange-500 text-xl flex items-center justify-center hover:bg-orange-500 hover:text-white transition"
+          >
+            +
+          </button>
+        </div>
+      )}
       {isAdmin && <DeleteBtnDish dishId={dish.id} />}
     </div>
   );

@@ -15,12 +15,12 @@ export const FRONT_ROUTES = {
     },
     Authentication: {
       path: "/authentication",
-      navigationPath: "/Authentication",
+      navigationPath: "/authentication",
       meta: { title: "Sign In", isInMenu: true, requireAuth: false },
     },
     Registration: {
-      path: "/Registration",
-      navigationPath: "/Registration",
+      path: "/registration",
+      navigationPath: "/registration",
       meta: { title: "Sign Up", isInMenu: false, requireAuth: false },
     },
     // OtpVerification: {
@@ -29,15 +29,15 @@ export const FRONT_ROUTES = {
     //   meta: { title: "OTP Verification", isInMenu: false, requireAuth: false },
     // },
 
-    Home: {
-      path: "/home",
-      navigationPath: "/home",
-      meta: {
-        title: "Discovery",
-        isInMenu: true,
-        requireAuth: true,
-      },
-    },
+    // Home: {
+    //   path: "/home",
+    //   navigationPath: "/home",
+    //   meta: {
+    //     title: "Discovery",
+    //     isInMenu: true,
+    //     requireAuth: true,
+    //   },
+    // },
     Favorites: {
       path: "/favorites",
       navigationPath: "/favorites",
@@ -171,8 +171,8 @@ export const FRONT_ROUTES = {
       },
     },
     FullMenu: {
-      path: ":restaurantSlug/full-menu",
-      navigationPath: (slug: string) => `/${slug}/full-menu`,
+      path: "/fullMenu",
+      navigationPath: "/fullMenu",
       meta: {
         title: "full-menu",
         isInMenu: false,

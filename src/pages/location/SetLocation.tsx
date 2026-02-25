@@ -1,31 +1,23 @@
-import { setSelectedRestaurant } from "@/entities/restourants/api/model/resttorantsSlice";
 import { useAllRestaurants } from "@/entities/restourants/model/useAllRestaurants";
-import RestaurantsCard from "@/entities/restourants/ui/RestoranCard";
-import { FRONT_ROUTES } from "@/shared/config/routes/frontRoutes";
-import { createSlug } from "@/shared/hooks/useRouterSlug";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/useSelector";
+import { setSelectedRestaurant } from "@/entities/restourants/api/model/resttorantsSlice";
+import { FRONT_ROUTES } from "@/shared/config/routes/frontRoutes";
 import { useNavigate } from "react-router";
+import RestaurantsCard from "@/entities/restourants/ui/RestoranCard";
 
-function SetLocation() {
-  const { restaurants, isLoading, isError } = useAllRestaurants();
+export default function SetLocation() {
   const dispatch = useAppDispatch();
   const selectedRestaurantId = useAppSelector(
     (state) => state.restaurant.selectedRestaurantId
   );
+  const { restaurants, isLoading, isError } = useAllRestaurants();
   const navigate = useNavigate();
 
   const allRestaurants = restaurants?.data ?? [];
 
   const handleConfirm = () => {
     if (!selectedRestaurantId) return;
-
-    const restaurant = allRestaurants.find(
-      (r) => r.id === selectedRestaurantId
-    );
-    if (!restaurant) return;
-
-    const slug = createSlug(restaurant.name);
-    navigate(FRONT_ROUTES.pages.FullMenu.navigationPath(slug));
+    navigate(FRONT_ROUTES.pages.FullMenu.navigationPath);
   };
 
   if (isLoading) return <div>Loading restaurants...</div>;
@@ -34,21 +26,17 @@ function SetLocation() {
 
   return (
     <div>
-      {allRestaurants.map((restaurant) => (
+      {allRestaurants.map((r) => (
         <RestaurantsCard
-          key={restaurant.id}
-          restoran={restaurant}
-          isSelected={selectedRestaurantId === restaurant.id}
+          key={r.id}
+          restoran={r}
+          isSelected={r.id === selectedRestaurantId}
           onSelect={(id) => dispatch(setSelectedRestaurant(id))}
         />
       ))}
-      <div>
-        {selectedRestaurantId && (
-          <button onClick={handleConfirm}>Підтвердити</button>
-        )}
-      </div>
+      {selectedRestaurantId && (
+        <button onClick={handleConfirm}>Підтвердити</button>
+      )}
     </div>
   );
 }
-
-export default SetLocation;

@@ -1,6 +1,7 @@
 import type { IDish } from "@/entities/dishes/types/interfaces";
 
 export interface IRestaurant {
+  slug: string;
   id: number;
   name: string;
   address: string;

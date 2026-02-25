@@ -1,7 +1,7 @@
 import type {
   IOrderDTO,
   IOrdersResponseDTO,
-} from "@/entities/order/types/interfaces";
+} from "@/entities/orders/types/interfaces";
 import { baseApi } from "@/shared/api/baseApi";
 import { API_ROUTES } from "@/shared/config/routes/apiRoutes";
 
@@ -44,10 +44,10 @@ export const orderApi = baseApi.injectEndpoints({
     // POST ===============================
     createOrder: build.mutation<
       IOrdersResponseDTO,
-      { id: number; orderData: IOrderDTO }
+      { userId: number; orderData: IOrderDTO }
     >({
-      query: ({ id, orderData }) => ({
-        url: API_ROUTES.orders.create(id),
+      query: ({ userId, orderData }) => ({
+        url: API_ROUTES.orders.create(userId),
         method: "POST",
         body: orderData,
       }),

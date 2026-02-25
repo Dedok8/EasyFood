@@ -6,17 +6,25 @@ export interface IOrderItemDTO {
 }
 
 export interface IOrderDTO {
-  id: number | string;
   restaurantId: string;
   items: IOrderItemDTO[];
   deliveryAddress: string;
   paymentMethod: string;
   usePoints?: number;
   rewardCode?: string;
+}
+
+export interface IOrderResponseDTO {
+  id: number;
   createdAt: string;
+  status: string;
+  restaurantId: string;
+  items: IOrderItemDTO[];
+  deliveryAddress: string;
+  paymentMethod: string;
 }
 
 export interface IOrdersResponseDTO {
   success: boolean;
-  data: IOrderDTO[];
+  data: IOrderResponseDTO[];
 }
