@@ -1,27 +1,26 @@
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import { NavLink } from "react-router";
 import LogoString from "@/shared/ui/logo/LogoString";
 import UserProfile from "@/widgets/User/UserProfile";
 import useMe from "@/entities/user/model/useMe";
 import { menuItems } from "@/shared/ui/aside/menuList";
-import { NavLink } from "react-router";
 import LogOut from "@/widgets/LogOut/LogOut";
-import "@/shared/styles/scss/components/aside.scss";
+import styles from "./aside.module.scss";
+// interface ISidebarProps {
+//   isOpen: boolean;
+//   // closeSidebar: () => void;
+// }
 
-interface ISidebarProps {
-  isOpen: boolean;
-  closeSidebar: () => void;
-}
-
-function Sidebar({ isOpen, closeSidebar }: ISidebarProps) {
+function Sidebar() {
+  const { user, isLoading } = useMe();
   const [expandedMenus, setExpandedMenus] = useState<Record<string, boolean>>(
     {}
   );
-  const { user, isLoading } = useMe();
 
   const toggleMenu = (label: string, e: React.MouseEvent) => {
     e.preventDefault();
-    e.stopPropagation(); // ВАЖНО: предотвращаем закрытие сайдбара при раскрытии подменю
+    e.stopPropagation();
     setExpandedMenus((prev) => ({
       ...prev,
       [label]: !prev[label],
@@ -31,27 +30,36 @@ function Sidebar({ isOpen, closeSidebar }: ISidebarProps) {
   if (isLoading || !user) return null;
 
   return (
-    <aside className={`sidebar ${isOpen ? "is-open" : ""}`}>
-      <div className="sidebar__header">
-        <LogoString />
-        <UserProfile user={user} />
+    <aside className={styles.aside}>
+      <div className={styles["aside__user--comp"]}>
+        <div className={styles["aside__user--logo"]}>
+          <LogoString />
+        </div>
+        <div>
+          <UserProfile user={user} />
+        </div>
       </div>
 
-      {/* onClick на nav нужен, чтобы закрывать сайдбар при клике на ССЫЛКИ */}
-      <nav className="sidebar__nav" onClick={closeSidebar}>
+      <nav className={styles.aside__nav}>
         {menuItems.map((section, idx) => (
-          <div key={idx} className="sidebar__section">
-            <span className="sidebar__section-title">{section.section}</span>
+          <div key={idx} className={styles["aside__nav--menu"]}>
+            <span>{section.section}</span>
 
             {section.items.map((item, itemIdx) => (
-              <div key={itemIdx} className="sidebar__item-wrapper">
+              <div key={itemIdx}>
                 {item.subItems ? (
                   <button
-                    className={`sidebar__item ${expandedMenus[item.label] ? "is-expanded" : ""}`}
                     onClick={(e) => toggleMenu(item.label, e)}
+                    className={`${styles["aside__nav--section-btn"]} ${
+                      expandedMenus[item.label]
+                        ? styles["aside__nav--section-btn--active"]
+                        : ""
+                    }`}
                   >
-                    <div className="sidebar__item-content">
-                      <item.icon className="sidebar__icon" size={20} />
+                    <div className={styles["aside__nav--section-icon"]}>
+                      <div className={styles["aside__nav--menu-img"]}>
+                        <item.icon size={20} />
+                      </div>
                       <span>{item.label}</span>
                     </div>
                     {expandedMenus[item.label] ? (
@@ -61,27 +69,28 @@ function Sidebar({ isOpen, closeSidebar }: ISidebarProps) {
                     )}
                   </button>
                 ) : (
-                  <NavLink to={item.path || "#"} className="sidebar__item">
-                    <div className="sidebar__item-content">
-                      <item.icon className="sidebar__icon" size={20} />
-                      <span>{item.label}</span>
+                  <NavLink
+                    to={item.path || "#"}
+                    className={({ isActive }) =>
+                      isActive
+                        ? styles["aside__nav--link-active"]
+                        : styles["aside__nav--link"]
+                    }
+                  >
+                    <div className={styles["aside__nav--menu-img"]}>
+                      <item.icon size={20} />
                     </div>
+                    <span>{item.label}</span>
                   </NavLink>
                 )}
 
-                {/* Подменю */}
                 {item.subItems && expandedMenus[item.label] && (
                   <div
-                    className="sidebar__subitems"
                     onClick={(e) => e.stopPropagation()}
+                    className={styles["aside__sub-menu"]}
                   >
                     {item.subItems.map((subItem, subIdx) => (
-                      <NavLink
-                        key={subIdx}
-                        to={subItem.path}
-                        className="sidebar__subitem"
-                        onClick={closeSidebar} // Закрываем при выборе конечного пункта
-                      >
+                      <NavLink key={subIdx} to={subItem.path}>
                         {subItem.label}
                       </NavLink>
                     ))}
@@ -93,7 +102,7 @@ function Sidebar({ isOpen, closeSidebar }: ISidebarProps) {
         ))}
       </nav>
 
-      <div className="sidebar__footer">
+      <div className={styles.aside__logout}>
         <LogOut />
       </div>
     </aside>

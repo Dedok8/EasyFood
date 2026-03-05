@@ -2,6 +2,7 @@ import type { RootState } from "@/app/store/types/storeTypes";
 import type { IRestaurant } from "@/entities/restourants/types/interfaces";
 import DeleteBtnRestauran from "@/features/restorant/delete-restorant/ui/DeleteBtnRestoran";
 import { useSelector } from "react-redux";
+import s from "./restaurantCard.module.scss";
 
 interface Props {
   restoran: IRestaurant;
@@ -11,33 +12,31 @@ interface Props {
 
 function RestaurantsCard({ restoran, isSelected, onSelect }: Props) {
   const user = useSelector((state: RootState) => state.auth.user);
-  console.log("DISPATCH ID:", restoran.id);
   const isAdmin = !!user?.isAdmin;
 
   return (
-    <div onClick={() => onSelect(restoran.id)}>
-      <div>
+    <div
+      className={`${s.card} ${isSelected ? s.selected : ""}`}
+      onClick={() => onSelect(restoran.id)}
+    >
+      <div className={s.card__imageWrapper}>
         <img
           src={restoran.imageUrl || "/placeholder-restaurant.jpg"}
           alt={restoran.name}
         />
       </div>
-      <div>
-        <h3>{restoran.name}</h3>
-        <p>{restoran.address}</p>
+
+      <div className={s.card__info}>
+        <h3 className={s.card__name}>{restoran.name}</h3>
+        <p className={s.card__address}>{restoran.address}</p>
       </div>
-      <div>
-        <div
-          className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
-            isSelected ? "border-orange-500" : "border-gray-300"
-          }`}
-        >
-          {isSelected && <div className="w-3 h-3 rounded-full bg-orange-500" />}
-        </div>
+
+      <div className={s.card__actions}>
+        <div className={`${s.card__radio} ${isSelected ? s.active : ""}`} />
         {isAdmin && (
-          // <div onClick={(e) => e.stopPropagation()}>
-          <DeleteBtnRestauran restoranId={restoran.id} />
-          // </div>
+          <div onClick={(e) => e.stopPropagation()}>
+            <DeleteBtnRestauran restoranId={restoran.id} />
+          </div>
         )}
       </div>
     </div>

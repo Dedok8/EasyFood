@@ -1,0 +1,14 @@
+@use "@/shared/styles/scss/base/index" as *;
+
+.user {
+  display: flex;
+  gap: toRem(8);
+  &__img {
+    display: flex;
+    width: toRem(50);
+    height: toRem(50);
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+}

@@ -5,6 +5,7 @@ import {
   removeFromCart,
 } from "@/entities/orders/api/model/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/useSelector";
+import s from "./orderForm.module.scss";
 
 export interface IOrderFormProps {
   dish: IDish;
@@ -21,70 +22,59 @@ function OrderForm({ dish }: IOrderFormProps) {
   const totalPrice = (Number(dish.price) * quantity).toFixed(2);
 
   return (
-    <div className="flex items-center gap-5 p-5 bg-white rounded-3xl shadow-sm border border-gray-100">
-      {/* Image */}
-      <div className="relative flex-shrink-0">
-        <div className="w-24 h-24 rounded-2xl overflow-hidden bg-gray-50">
-          <img
-            src={dish.imageUrl}
-            alt={dish.name}
-            className="w-full h-full object-cover"
-          />
+    <div className={s.item}>
+      <div className={s.imageWrapper}>
+        <div className={s.imageWrapper__img}>
+          <img src={dish.imageUrl} alt={dish.name} />
         </div>
+        {quantity > 0 && (
+          <span className={s.imageWrapper__badge}>{quantity}</span>
+        )}
       </div>
 
-      {/* Info */}
-      <div className="flex-1 min-w-0">
-        <h3 className="font-semibold text-gray-900 text-base leading-tight truncate">
-          {dish.name}
-        </h3>
-
-        <div className="flex items-center gap-1 mt-1 text-sm text-yellow-500">
-          ⭐ <span className="text-gray-500">{dish.rating} (120 reviews)</span>
+      <div className={s.info}>
+        <h3 className={s.info__name}>{dish.name}</h3>
+        <div className={s.info__rating}>
+          <span>★</span>
+          <span>{dish.rating}</span>
         </div>
-
-        <p className="text-orange-500 font-bold text-lg mt-2">
-          $ {quantity > 0 ? totalPrice : Number(dish.price).toFixed(2)}
+        <p className={s.info__price}>
+          ${quantity > 0 ? totalPrice : Number(dish.price).toFixed(2)}
         </p>
       </div>
 
-      {/* Controls */}
-      <div className="flex items-center gap-3 flex-shrink-0">
+      <div className={s.controls}>
         {quantity > 0 && (
           <>
             <button
+              className={s.btnMinus}
               onClick={() => dispatch(decrementFromCart(dish.id))}
-              className="w-10 h-10 rounded-full bg-orange-100 text-orange-500 text-xl font-bold flex items-center justify-center hover:bg-orange-500 hover:text-white transition-all duration-200 active:scale-95"
             >
               −
             </button>
-
-            <span className="w-6 text-center text-gray-800 font-semibold text-base">
-              {quantity}
-            </span>
+            <span className={s.quantity}>{quantity}</span>
           </>
         )}
 
         <button
-          onClick={() => dispatch(addToCart(dish))}
-          className="w-10 h-10 rounded-full bg-orange-100 text-orange-500 text-xl font-bold flex items-center justify-center hover:bg-orange-500 hover:text-white transition-all duration-200 active:scale-95"
+          className={s.btnPlus}
+          onClick={() => dispatch(addToCart({ dish, quantity: 1 }))}
         >
           +
         </button>
 
         {quantity > 0 && (
           <button
+            className={s.btnDelete}
             onClick={() => dispatch(removeFromCart(dish.id))}
-            className="w-10 h-10 rounded-full bg-gray-100 text-gray-400 flex items-center justify-center hover:bg-red-100 hover:text-red-500 transition-all duration-200 active:scale-95"
           >
             <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
+              width="13"
+              height="13"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              strokeWidth="2"
+              strokeWidth="2.5"
               strokeLinecap="round"
               strokeLinejoin="round"
             >

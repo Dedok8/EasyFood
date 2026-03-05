@@ -6,6 +6,7 @@ import Input from "@/shared/ui/Input/Input";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
+import styles from "./loginForm.module.scss";
 
 function LoginForm() {
   type LoginFormValues = {
@@ -44,10 +45,7 @@ function LoginForm() {
     console.log(apiErrorMessage || errorMessage);
   }
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex w-full flex-col gap-4"
-    >
+    <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
       <label>
         <Input
           label={t("inputs.email")}
@@ -76,7 +74,7 @@ function LoginForm() {
       <button
         type="submit"
         disabled={!isValid || isSubmitting || isLoading}
-        className="btn-primary"
+        className={styles.btnPrimary}
       >
         {isSubmitting ? t("loading") : t("buttons.login")}
       </button>

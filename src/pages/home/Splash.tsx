@@ -1,11 +1,9 @@
 import type { RootState } from "@/app/store/types/storeTypes";
 import dish_1 from "@/assets/Splash/dish_1.png";
 import dish_2 from "@/assets/Splash/dish_2.png";
-
 import { FRONT_ROUTES } from "@/shared/config/routes/frontRoutes";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-
 import { useNavigate } from "react-router";
 
 function Splash() {

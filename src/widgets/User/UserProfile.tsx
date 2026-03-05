@@ -1,24 +1,31 @@
+import { useState } from "react";
 import userPhoto from "../../assets/User/userDefaultAvatar.png";
-
+import s from "./userProfile.module.scss";
+import UserInfoModal from "@/widgets/UserInfoModal/UserInfoModal";
+import type { IUserDTO } from "@/entities/user/types/interfaces";
 interface Props {
-  user: {
-    avatarUrl: string;
-    username: string;
-  };
+  user: IUserDTO;
 }
 
 function UserProfile({ user }: Props) {
   const avatarSrc = user.avatarUrl ?? userPhoto;
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   return (
-    <div className="flex items-center gap-2 px-2 py-2 border-b border-slate-700">
-      <img
-        src={avatarSrc}
-        alt="User avatar"
-        className="w-10 h-10 rounded-full object-cover"
-      />
+    <div className={s.user}>
+      <img className={s.user__img} src={avatarSrc} alt="User avatar" />
 
-      <span className="truncate text-xs text-slate-400">{user.username}</span>
+      <div>
+        <span>{user.username}</span>
+        <div onClick={() => setIsCartOpen(true)}>
+          <span>User detail</span>
+          <UserInfoModal
+            isOpen={isCartOpen}
+            onClose={() => setIsCartOpen(false)}
+            user={user}
+          />
+        </div>
+      </div>
     </div>
   );
 }

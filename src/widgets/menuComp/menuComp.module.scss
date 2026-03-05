@@ -1,0 +1,72 @@
+@use "@/shared/styles/scss/base/index" as *;
+
+.menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: toRem(20);
+
+  &__container-btns {
+    display: flex;
+    gap: toRem(15);
+  }
+  &__btn {
+    padding: toRem(15) toRem(35) toRem(15) toRem(35);
+    border-radius: toRem(15);
+    color: #555;
+    background: #f0f0f0;
+    transition:
+      background 0.15s,
+      color 0.15s;
+    &.active {
+      background: orange;
+      color: #fff;
+    }
+
+    &:hover:not(.active) {
+      background: #e0e0e0;
+    }
+  }
+  &__proposals-btn {
+    padding: toRem(15) toRem(35) toRem(15) toRem(35);
+    background-color: purple;
+    color: white;
+    border-radius: toRem(15);
+  }
+
+  &__view {
+    display: flex;
+    gap: toRem(4);
+    background: #f0f0f0;
+    border-radius: toRem(10);
+    padding: toRem(4);
+  }
+
+  &__logic {
+    display: flex;
+    gap: toRem(15);
+  }
+
+  &__viewBtn {
+    width: toRem(36);
+    height: toRem(36);
+    border-radius: toRem(8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    transition:
+      background 0.15s,
+      color 0.15s;
+
+    &:hover {
+      color: #555;
+    }
+
+    &.active {
+      background: #fff;
+      color: #1a1a1a;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    }
+  }
+}

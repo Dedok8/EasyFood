@@ -5,6 +5,7 @@ import restaurantReducer from "@/entities/restourants/api/model/resttorantsSlice
 import cartReducer from "@/entities/orders/api/model/cartSlice";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import openDishModalReducer from "@/entities/dishes/api/model/dishModal";
 
 const persistConfig = {
   key: "restaurant",
@@ -22,6 +23,7 @@ export const store = configureStore({
     auth: authReducer,
     restaurant: persistedRestaurantReducer,
     cart: cartReducer,
+    dish: openDishModalReducer,
     [baseApi.reducerPath]: baseApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>

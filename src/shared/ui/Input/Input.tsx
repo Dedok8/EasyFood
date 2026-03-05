@@ -1,4 +1,5 @@
 import type { InputHTMLAttributes } from "react";
+import styles from "./input.module.scss";
 
 interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -8,30 +9,14 @@ interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 const Input = ({ label, error, hint, ...rest }: IInputProps) => {
   return (
-    <div style={{ marginBottom: 14 }}>
-      {label && (
-        <label style={{ display: "block", marginBottom: 6 }}>{label}</label>
-      )}
+    <div className={styles.inputWrapper}>
+      {label && <label className={styles.inputLabel}>{label}</label>}
       <input
         {...rest}
-        style={{
-          width: "100%",
-          padding: "10px 12px",
-          borderRadius: 8,
-          border: error ? "1px solid #e11d48" : "1px solid #cbd5e1",
-          outline: "none",
-        }}
+        className={`${styles.inputField} ${error ? styles["inputField--error"] : ""}`}
       />
-      {hint && !error && (
-        <div style={{ fontSize: 12, color: "#64748b", marginTop: 4 }}>
-          {hint}
-        </div>
-      )}
-      {error && (
-        <div style={{ fontSize: 12, color: "#e11d48", marginTop: 4 }}>
-          {error}
-        </div>
-      )}
+      {hint && !error && <div className={styles.inputHint}>{hint}</div>}
+      {error && <div className={styles.inputError}>{error}</div>}
     </div>
   );
 };

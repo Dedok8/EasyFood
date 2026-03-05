@@ -1,0 +1,20 @@
+@use "@/shared/styles/scss/base/index" as *;
+
+.menu {
+  &__grid {
+    padding: 0 toRem(15);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: toRem(16);
+
+    @media (max-width: $tablet) {
+      grid-template-columns: 1fr;
+    }
+  }
+  &__list {
+    padding: 0 toRem(15);
+    display: flex;
+    flex-direction: column;
+    gap: toRem(12);
+  }
+}

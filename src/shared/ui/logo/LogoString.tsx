@@ -1,10 +1,10 @@
-// import "../../styles/scss/base/logo/logo.scss";
+import styles from "./logo.module.scss";
 
 function LogoString() {
   return (
-    <div>
-      <span>Easy</span>
-      <span>Food</span>
+    <div className={styles.logo}>
+      <span className={styles.logo__title}>Easy</span>
+      <span className={styles.logo__description}>Food</span>
     </div>
   );
 }

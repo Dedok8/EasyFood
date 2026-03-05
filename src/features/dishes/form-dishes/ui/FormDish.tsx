@@ -1,21 +1,16 @@
 import { useFormDish } from "@/features/dishes/form-dishes/model/useFormDish";
 import type { IUseFormDishesProps } from "@/features/dishes/form-dishes/types/interfaces";
+import s from "./formDish.module.scss";
 
 function FormDish({ onSubmit, initialData, isLoading }: IUseFormDishesProps) {
   const { form, handleChange, handleSubmit } = useFormDish({
     onSubmit,
     initialData,
   });
-
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="w-full max-w-lg mx-auto bg-white rounded-2xl shadow-lg p-8 flex flex-col gap-5"
-    >
-      <div className="flex flex-col gap-1">
-        <label htmlFor="name" className="text-sm font-medium text-gray-600">
-          Назва
-        </label>
+    <form className={s.form} onSubmit={handleSubmit}>
+      <div className={s.field}>
+        <label htmlFor="name">Назва</label>
         <input
           id="name"
           name="name"
@@ -24,16 +19,10 @@ function FormDish({ onSubmit, initialData, isLoading }: IUseFormDishesProps) {
           onChange={handleChange}
           required
           placeholder="Enter name"
-          className="border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
         />
       </div>
-      <div className="flex flex-col gap-1">
-        <label
-          htmlFor="description"
-          className="text-sm font-medium text-gray-600"
-        >
-          description
-        </label>
+      <div className={s.field}>
+        <label htmlFor="description">description</label>
         <input
           id="description"
           name="description"
@@ -42,13 +31,10 @@ function FormDish({ onSubmit, initialData, isLoading }: IUseFormDishesProps) {
           onChange={handleChange}
           required
           placeholder="description"
-          className="border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
         />
       </div>
-      <div className="flex flex-col gap-1">
-        <label htmlFor="price" className="text-sm font-medium text-gray-600">
-          price
-        </label>
+      <div className={s.field}>
+        <label htmlFor="price">price</label>
         <input
           id="price"
           name="price"
@@ -57,30 +43,23 @@ function FormDish({ onSubmit, initialData, isLoading }: IUseFormDishesProps) {
           onChange={handleChange}
           required
           placeholder="price"
-          className="border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
         />
       </div>
-      <div className="flex flex-col gap-1">
-        <label htmlFor="imageUrl" className="text-sm font-medium text-gray-600">
-          imageUrl
-        </label>
+      <div className={s.field}>
+        <label htmlFor="imageUrl">imageUrl</label>
         <input
           id="imageUrl"
           name="imageUrl"
           type="text"
           value={form.imageUrl ?? ""}
           onChange={handleChange}
-          // required
           placeholder="imageUrl"
-          className="border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
         />
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
-        <div className="flex flex-col gap-1">
-          <label htmlFor="kcal" className="text-sm font-medium text-gray-600">
-            kcal
-          </label>
+      <div className={s.grid}>
+        <div className={s.field}>
+          <label htmlFor="kcal">kcal</label>
           <input
             id="kcal"
             name="kcal"
@@ -89,13 +68,10 @@ function FormDish({ onSubmit, initialData, isLoading }: IUseFormDishesProps) {
             onChange={handleChange}
             required
             placeholder="kcal"
-            className="border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
           />
         </div>
-        <div className="flex flex-col gap-1">
-          <label htmlFor="weight" className="text-sm font-medium text-gray-600">
-            weight
-          </label>
+        <div className={s.field}>
+          <label htmlFor="weight">weight</label>
           <input
             id="weight"
             name="weight"
@@ -104,16 +80,10 @@ function FormDish({ onSubmit, initialData, isLoading }: IUseFormDishesProps) {
             onChange={handleChange}
             required
             placeholder="weight"
-            className="border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
           />
         </div>
-        <div className="flex flex-col gap-1">
-          <label
-            htmlFor="proteins"
-            className="text-sm font-medium text-gray-600"
-          >
-            proteins
-          </label>
+        <div className={s.field}>
+          <label htmlFor="proteins">proteins</label>
           <input
             id="proteins"
             name="proteins"
@@ -122,13 +92,10 @@ function FormDish({ onSubmit, initialData, isLoading }: IUseFormDishesProps) {
             onChange={handleChange}
             required
             placeholder="proteins"
-            className="border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
           />
         </div>
-        <div className="flex flex-col gap-1">
-          <label htmlFor="carbs" className="text-sm font-medium text-gray-600">
-            carbs
-          </label>
+        <div className={s.field}>
+          <label htmlFor="carbs">carbs</label>
           <input
             id="carbs"
             name="carbs"
@@ -137,13 +104,10 @@ function FormDish({ onSubmit, initialData, isLoading }: IUseFormDishesProps) {
             onChange={handleChange}
             required
             placeholder="carbs"
-            className="border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
           />
         </div>
-        <div className="flex flex-col gap-1">
-          <label htmlFor="fats" className="text-sm font-medium text-gray-600">
-            fats
-          </label>
+        <div className={s.field}>
+          <label htmlFor="fats">fats</label>
           <input
             id="fats"
             name="fats"
@@ -152,13 +116,10 @@ function FormDish({ onSubmit, initialData, isLoading }: IUseFormDishesProps) {
             onChange={handleChange}
             required
             placeholder="fats"
-            className="border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
           />
         </div>
-        <div className="flex flex-col gap-1">
-          <label htmlFor="rating" className="text-sm font-medium text-gray-600">
-            rating
-          </label>
+        <div className={s.field}>
+          <label htmlFor="rating">rating</label>
           <input
             id="rating"
             name="rating"
@@ -167,7 +128,6 @@ function FormDish({ onSubmit, initialData, isLoading }: IUseFormDishesProps) {
             onChange={handleChange}
             required
             placeholder="rating"
-            className="border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
           />
         </div>
         <input
@@ -181,15 +141,9 @@ function FormDish({ onSubmit, initialData, isLoading }: IUseFormDishesProps) {
           onChange={handleChange}
           required
           placeholder="0.0 - 5.0"
-          className=""
         />
-        <div className="flex flex-col gap-1">
-          <label
-            htmlFor="subcategoryId"
-            className="text-sm font-medium text-gray-600"
-          >
-            subcategoryId
-          </label>
+        <div className={s.field}>
+          <label htmlFor="subcategoryId">subcategoryId</label>
           <input
             id="subcategoryId"
             name="subcategoryId"
@@ -198,33 +152,22 @@ function FormDish({ onSubmit, initialData, isLoading }: IUseFormDishesProps) {
             onChange={handleChange}
             required
             placeholder="subcategoryId"
-            className="border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
           />
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className={s.checkbox}>
           <input
             id="isAvailable"
             name="isAvailable"
             type="checkbox"
             checked={form.isAvailable}
             onChange={handleChange}
-            className="w-4 h-4 accent-blue-600"
           />
-          <label
-            htmlFor="isAvailable"
-            className="text-sm font-medium text-gray-600"
-          >
-            isAvailable
-          </label>
+          <label htmlFor="isAvailable">isAvailable</label>
         </div>
       </div>
 
-      <button
-        type="submit"
-        disabled={isLoading}
-        className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold px-6 py-3 rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
-      >
+      <button className={s.submit} type="submit" disabled={isLoading}>
         {isLoading ? "Loading..." : "Додати блюдо"}
       </button>
     </form>

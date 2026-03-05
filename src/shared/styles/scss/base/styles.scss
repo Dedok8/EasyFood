@@ -1,0 +1,37 @@
+@use "sass:math";
+@use "./index" as *;
+// // Шрифти
+// // @import "_fonts";
+// // Обнулення
+// @use "./env" as *;
+// // Компоненти
+// // @import "_common";
+// // Функції
+// @use "./function" as *;
+// //mixinsІ
+// @use "./mixins" as *;
+// //header
+// @import "../../../ui/aside/aside.module.scss";
+// //footer
+// // @import "_footer";
+
+// [class*="__container"]:not([class*="form__container"]) {
+//   margin: 0 auto;
+//   padding: 0 toRem($containerPadding);
+//   max-width: toRem($maxWidthContainer);
+// }
+
+.wrapper {
+  min-height: 100%;
+  overflow: clip;
+  display: flex;
+  flex-direction: column;
+  main {
+    flex-grow: 1;
+  }
+}
+
+body {
+  min-width: toRem($minWidth);
+  line-height: normal;
+}

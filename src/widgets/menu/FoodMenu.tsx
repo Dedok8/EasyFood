@@ -1,7 +1,7 @@
 import menuIcon from "@/assets/MenuAside/columns.png";
 import orderHistoryIcon from "@/assets/MenuAside/history.png";
 import mapIcon from "@/assets/MenuAside/Map-pin.png";
-import "@/shared/styles/scss/menu/menu.scss";
+
 import { FRONT_ROUTES } from "@/shared/config/routes/frontRoutes";
 import { NavLink } from "react-router";
 

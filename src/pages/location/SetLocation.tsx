@@ -4,7 +4,8 @@ import { setSelectedRestaurant } from "@/entities/restourants/api/model/resttora
 import { FRONT_ROUTES } from "@/shared/config/routes/frontRoutes";
 import { useNavigate } from "react-router";
 import RestaurantsCard from "@/entities/restourants/ui/RestoranCard";
-
+import HeaderComp from "@/shared/ui/headerComp/HeaderComp";
+import s from "./setloacation.module.scss";
 export default function SetLocation() {
   const dispatch = useAppDispatch();
   const selectedRestaurantId = useAppSelector(
@@ -26,17 +27,40 @@ export default function SetLocation() {
 
   return (
     <div>
-      {allRestaurants.map((r) => (
-        <RestaurantsCard
-          key={r.id}
-          restoran={r}
-          isSelected={r.id === selectedRestaurantId}
-          onSelect={(id) => dispatch(setSelectedRestaurant(id))}
-        />
-      ))}
-      {selectedRestaurantId && (
-        <button onClick={handleConfirm}>Підтвердити</button>
-      )}
+      <HeaderComp locationName={"Set Location"} label={"Food menu"} />
+
+      <div className={s.location}>
+        <div className={s["location__container--title"]}>
+          <h2 className={s.location__title}>
+            Restaurants based on your selected location
+          </h2>
+          <p className={s.location__description}>
+            Please enter your location or allow access to your location to find
+            all restaurants that are near you{" "}
+          </p>
+        </div>
+      </div>
+      <div className={s["restaurant__comp"]}>
+        {allRestaurants.map((r) => (
+          <RestaurantsCard
+            key={r.id}
+            restoran={r}
+            isSelected={r.id === selectedRestaurantId}
+            onSelect={(id) => dispatch(setSelectedRestaurant(id))}
+          />
+        ))}
+
+        {selectedRestaurantId && (
+          <div>
+            <button
+              onClick={handleConfirm}
+              className={s["restaurant__comp--btn"]}
+            >
+              Підтвердити
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

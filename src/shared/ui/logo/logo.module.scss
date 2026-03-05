@@ -1,0 +1,11 @@
+$textColor: orange;
+.logo {
+  font-size: toRem(24);
+  font-weight: 500;
+
+  &__title {
+  }
+  &__description {
+    color: $textColor;
+  }
+}

@@ -1,5 +1,5 @@
 import { createRoot } from "react-dom/client";
-import "./shared/styles/index.css";
+import "@/shared/styles/scss/base/styles.scss";
 import { ErrorBoundary } from "react-error-boundary";
 import { Provider } from "react-redux";
 import { persistor, store } from "@/app/store/store";
